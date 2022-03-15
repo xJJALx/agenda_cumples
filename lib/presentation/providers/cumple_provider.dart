@@ -55,18 +55,21 @@ class CumpleProvider extends ChangeNotifier {
     _cumplesResp.sort((a, b) => a.date.month.compareTo(b.date.month));
   }
 
-//  Todo: Si no hay cumple en el mes actual cargar los siguientes
   void getNearCumples() async {
+    var nextMonth = 0;
+
+    while (_nearCumples.isEmpty && nextMonth <= 12) {
+      _nearCumples = [..._cumplesResp.where((cumple) => cumple.date.month == _today.month + nextMonth)];
+      nextMonth++;
+    }
+
+    notifyListeners();
+
     // var nearCumples = _cumples.map((cumple) {
     //   if (cumple.month == _today.month) return cumple;
     // }).toList();
-
-    _nearCumples = [..._cumplesResp.where((cumple) => cumple.date.month == _today.month)];
-
-    notifyListeners();
   }
 
-// Todo arreglar el alto del separador
   int goToActualMonth() {
     var pixels = 0;
     var separators = (_today.month - 1) * 60; // 60 height aprox title of month

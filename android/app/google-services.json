@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "666245894893",
+    "project_id": "xagenda-cumplesx",
+    "storage_bucket": "xagenda-cumplesx.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:666245894893:android:b7db8d75e730cef71a72e4",
+        "android_client_info": {
+          "package_name": "com.jhonaristiloz.agenda_cumples"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "666245894893-1tnui02f2uoiaus92bqh8pdm5c0ql2mo.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyACBQ-XkfuE9jM2xNYrbZmJNxS9-_hjYfA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "666245894893-1tnui02f2uoiaus92bqh8pdm5c0ql2mo.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

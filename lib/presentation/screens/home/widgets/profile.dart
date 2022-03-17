@@ -47,6 +47,7 @@ class Avatar extends StatelessWidget {
   }
 }
 
+// ToDo Desactivar hover del botón
 class MenuIcon extends StatelessWidget {
   const MenuIcon({Key? key}) : super(key: key);
 
@@ -66,6 +67,7 @@ class MenuIcon extends StatelessWidget {
   }
 }
 
+// ToDo Desactivar hover del botón
 class EditIcon extends StatelessWidget {
   const EditIcon({Key? key}) : super(key: key);
 

@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:provider/provider.dart';
 
+import 'package:agenda_cumples/presentation/routes/routes.dart';
+import 'package:agenda_cumples/presentation/screens/screens.dart';
 import 'package:agenda_cumples/presentation/widgets/widgets.dart';
+
+import 'package:provider/provider.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:agenda_cumples/presentation/providers/cumple_provider.dart';
 
 // Todo cambiar appbar statico por uno que se oculte
@@ -29,6 +32,11 @@ class CumplesScreen extends StatelessWidget {
             _Cumples(),
           ],
         ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: const Color(0xFFe5e0fd),
+        onPressed: () => Navigator.push(context, CustomPageRoute(child: const CumpleEditScreen())),
+        child: const Icon(Icons.add, color: Color(0xFFa492f8)),
       ),
     );
   }

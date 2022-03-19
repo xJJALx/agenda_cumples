@@ -9,7 +9,7 @@ import 'package:agenda_cumples/data/models/models.dart';
 
 class CumpleProvider extends ChangeNotifier {
   final DateTime _today = DateTime.now();
-  final Map<Cumple, bool> _cumples = {};
+  Map<Cumple, bool> _cumples = {};
   List<Cumple> _cumplesResp = [];
   List<Cumple> _nearCumples = [];
   FirebaseCumplesRepository repository = FirebaseCumplesRepository();
@@ -24,7 +24,6 @@ class CumpleProvider extends ChangeNotifier {
 
   getCumples() async {
     // await Future.delayed(const Duration(milliseconds: 500), () => _cumplesResp = cumplesData);
-
     _cumplesResp = await repository.getCumplesFirebase();
 
     sortCumples();
@@ -35,6 +34,7 @@ class CumpleProvider extends ChangeNotifier {
   }
 
   void setMonthTitle() {
+    _cumples = {};
     bool firstCumpleOfMonth = false;
     int monthAux = 0;
 
@@ -53,11 +53,19 @@ class CumpleProvider extends ChangeNotifier {
   void sortCumples() {
     _cumplesResp.sort((a, b) => a.date.day.compareTo(b.date.day));
     _cumplesResp.sort((a, b) => a.date.month.compareTo(b.date.month));
+    notifyListeners();
   }
 
   void getNearCumples() async {
-    var nextMonth = 0;
+    var nextMonth = 1;
+    _nearCumples = [];
 
+    // Control mes actual
+    if (_nearCumples.isEmpty) {
+      _nearCumples = [..._cumplesResp.where((cumple) => cumple.date.month == _today.month && cumple.date.day >= _today.day)];
+    }
+
+    // Cumple más cerano
     while (_nearCumples.isEmpty && nextMonth <= 12) {
       _nearCumples = [..._cumplesResp.where((cumple) => cumple.date.month == _today.month + nextMonth)];
       nextMonth++;
@@ -82,5 +90,19 @@ class CumpleProvider extends ChangeNotifier {
     }
 
     return pixels;
+  }
+
+  void updateCumpleTest() async {
+    // Cumple cumple = Cumple(name: name, date: date);
+    // await repository.addCumpleFirebase(cumple).then((value) => _cumples.putIfAbsent(cumple, () => false));
+    // getCumples();
+  }
+
+  void addCumple(String name, DateTime date) async {
+    final DateTime dateFormat = date.add(const Duration(hours: 12));
+    Cumple cumple = Cumple(name: name, date: dateFormat);
+
+    await repository.addCumpleFirebase(cumple).then((value) => _cumples.putIfAbsent(cumple, () => false));
+    getCumples();
   }
 }

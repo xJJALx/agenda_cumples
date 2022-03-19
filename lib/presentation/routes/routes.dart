@@ -4,7 +4,7 @@ import 'package:agenda_cumples/presentation/screens/screens.dart';
 final Map<String, Widget Function(BuildContext)> appRoutes = {
   'home': (_) => const HomeScreen(),
   'cumples': (_) => const CumplesScreen(),
-  'cumple-details': (_) => const CumpleDetailsScreen(),
+  'cumple-edit': (_) => const CumpleEditScreen(),
 };
 
 class CustomPageRoute extends PageRouteBuilder {

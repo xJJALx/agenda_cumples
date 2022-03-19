@@ -1,14 +1,14 @@
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:google_fonts/google_fonts.dart';
+
 import 'package:agenda_cumples/presentation/providers/cumple_provider.dart';
 import 'package:agenda_cumples/presentation/routes/routes.dart';
-import 'package:agenda_cumples/presentation/screens/cumple_details/cumple_details.dart';
-import 'package:agenda_cumples/presentation/screens/cumples/cumples_screen.dart';
-import 'package:flutter/material.dart';
+import 'package:agenda_cumples/presentation/screens/screens.dart';
 
 import 'package:agenda_cumples/presentation/screens/home/widgets/action_item.dart';
 import 'package:agenda_cumples/presentation/screens/home/widgets/profile.dart';
 import 'package:agenda_cumples/presentation/widgets/cumple_card.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:provider/provider.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -54,7 +54,7 @@ class MenuActions extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         GestureDetector(
-          onTap: () => Navigator.push(context, CustomPageRoute(child: const CumpleDetailsScreen())),
+          onTap: () => Navigator.push(context, CustomPageRoute(child: const CumpleEditScreen())),
           child: const ActionItem(
             title: 'nuevo',
             icon: Icons.add,

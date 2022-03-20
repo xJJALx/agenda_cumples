@@ -58,6 +58,8 @@ class MenuIcon extends StatelessWidget {
           margin: const EdgeInsets.only(top: 30, left: 20),
           child: IconButton(
             onPressed: () {},
+            splashColor: Colors.transparent,
+            highlightColor: Colors.transparent,
             hoverColor: Colors.transparent,
             icon: const Icon(Icons.notes_sharp, color: Colors.black87),
           ),
@@ -81,6 +83,8 @@ class EditIcon extends StatelessWidget {
             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50)),
             child: IconButton(
               onPressed: () {},
+              splashColor: Colors.transparent,
+              highlightColor: Colors.transparent,
               hoverColor: Colors.transparent,
               icon: const Icon(Icons.edit, color: Color(0xFFa492f8)),
             ),

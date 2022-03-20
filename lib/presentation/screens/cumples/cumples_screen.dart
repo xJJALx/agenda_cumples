@@ -58,7 +58,6 @@ class _Titulo extends StatelessWidget {
 }
 
 // https://stackoverflow.com/questions/51216448/is-there-any-callback-to-tell-me-when-build-function-is-done-in-flutter
-// Todo cambiar a double la funcion go to actual month
 class _Cumples extends StatelessWidget {
   _Cumples({Key? key}) : super(key: key);
 
@@ -68,11 +67,11 @@ class _Cumples extends StatelessWidget {
   Widget build(BuildContext context) {
     final cumpleProvider = Provider.of<CumpleProvider>(context);
     final cumples = cumpleProvider.allCumples;
-    int _positionScroll = cumpleProvider.goToActualMonth();
+    double _positionScroll = cumpleProvider.goToActualMonth();
 
     void _animateToIndex() {
       _controller.animateTo(
-        _positionScroll.toDouble(),
+        _positionScroll,
         duration: const Duration(seconds: 3),
         curve: Curves.easeInOut,
       );

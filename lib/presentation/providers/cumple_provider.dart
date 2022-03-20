@@ -78,9 +78,9 @@ class CumpleProvider extends ChangeNotifier {
     // }).toList();
   }
 
-  int goToActualMonth() {
-    var pixels = 0;
-    var separators = (_today.month - 1) * 60; // 60 height aprox title of month
+  double goToActualMonth() {
+    double pixels = 0;
+    double separators = (_today.month - 1) * 60; // 60 height aprox title of month
 
     for (var i = 0; i < _cumplesResp.length; i++) {
       if (_cumplesResp[i].date.month == _today.month) {

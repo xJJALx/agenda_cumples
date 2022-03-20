@@ -47,7 +47,6 @@ class Avatar extends StatelessWidget {
   }
 }
 
-// ToDo Desactivar hover del botón
 class MenuIcon extends StatelessWidget {
   const MenuIcon({Key? key}) : super(key: key);
 
@@ -59,6 +58,7 @@ class MenuIcon extends StatelessWidget {
           margin: const EdgeInsets.only(top: 30, left: 20),
           child: IconButton(
             onPressed: () {},
+            hoverColor: Colors.transparent,
             icon: const Icon(Icons.notes_sharp, color: Colors.black87),
           ),
         ),
@@ -67,7 +67,6 @@ class MenuIcon extends StatelessWidget {
   }
 }
 
-// ToDo Desactivar hover del botón
 class EditIcon extends StatelessWidget {
   const EditIcon({Key? key}) : super(key: key);
 
@@ -82,6 +81,7 @@ class EditIcon extends StatelessWidget {
             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50)),
             child: IconButton(
               onPressed: () {},
+              hoverColor: Colors.transparent,
               icon: const Icon(Icons.edit, color: Color(0xFFa492f8)),
             ),
           ),

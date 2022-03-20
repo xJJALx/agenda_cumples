@@ -13,13 +13,20 @@ class CumpleProvider extends ChangeNotifier {
   List<Cumple> _cumplesResp = [];
   List<Cumple> _nearCumples = [];
   FirebaseCumplesRepository repository = FirebaseCumplesRepository();
+  late Cumple _cumple;
 
   Map<Cumple, bool> get allCumples => _cumples;
   List<Cumple> get nearCumples => _nearCumples;
   DateTime get today => _today;
+  Cumple get cumple => _cumple;
 
   CumpleProvider() {
     getCumples();
+  }
+
+  set cumple(Cumple value) {
+    _cumple = value;
+    notifyListeners();
   }
 
   getCumples() async {
@@ -104,5 +111,11 @@ class CumpleProvider extends ChangeNotifier {
 
     await repository.addCumpleFirebase(cumple).then((value) => _cumples.putIfAbsent(cumple, () => false));
     getCumples();
+  }
+
+  void clearCumple() {
+    Cumple cumpleAux = Cumple(name: '', date: DateTime(1900, 1, 1));
+    cumple = cumpleAux;
+    notifyListeners();
   }
 }

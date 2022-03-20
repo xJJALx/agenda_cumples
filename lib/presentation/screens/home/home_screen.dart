@@ -54,7 +54,10 @@ class MenuActions extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         GestureDetector(
-          onTap: () => Navigator.push(context, CustomPageRoute(child: const CumpleEditScreen())),
+          onTap: () {
+            Provider.of<CumpleProvider>(context, listen: false).clearCumple();
+            Navigator.push(context, CustomPageRoute(child: const CumpleEditScreen()));
+          },
           child: const ActionItem(
             title: 'nuevo',
             icon: Icons.add,

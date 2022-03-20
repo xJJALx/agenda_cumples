@@ -1,9 +1,13 @@
-import 'package:agenda_cumples/data/models/models.dart';
-import 'package:agenda_cumples/presentation/utils/gradient_colors.dart';
-// import 'package:provider/provider.dart';
-// import 'package:agenda_cumples/presentation/providers/cumple_provider.dart';
-import 'package:agenda_cumples/presentation/utils/month_text.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import 'package:agenda_cumples/data/models/models.dart';
+import 'package:agenda_cumples/presentation/routes/routes.dart';
+import 'package:agenda_cumples/presentation/screens/screens.dart';
+import 'package:agenda_cumples/presentation/providers/cumple_provider.dart';
+
+import 'package:agenda_cumples/presentation/utils/gradient_colors.dart';
+import 'package:agenda_cumples/presentation/utils/month_text.dart';
 
 class CumpleCard extends StatelessWidget {
   const CumpleCard(this.cumple, {Key? key}) : super(key: key);
@@ -13,13 +17,17 @@ class CumpleCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    // final cumpleProvider = Provider.of<CumpleProvider>(context);
+    final cumpleProvider = Provider.of<CumpleProvider>(context);
 
     return Container(
       padding: const EdgeInsets.all(20),
       width: size.width * 0.9,
       height: 220,
       child: InkWell(
+        onTap: () {
+          cumpleProvider.cumple = cumple;
+          Navigator.push(context, CustomPageRoute(child: const CumpleDetailsScreen()));
+        },
         child: Container(
           decoration: BoxDecoration(
             borderRadius: const BorderRadius.all(Radius.circular(15)),

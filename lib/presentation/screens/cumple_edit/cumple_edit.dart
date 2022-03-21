@@ -1,7 +1,9 @@
-import 'package:agenda_cumples/presentation/providers/cumple_provider.dart';
 import 'package:flutter/material.dart';
-import 'package:agenda_cumples/presentation/widgets/widgets.dart';
 import 'package:provider/provider.dart';
+
+import 'package:agenda_cumples/presentation/providers/cumple_provider.dart';
+import 'package:agenda_cumples/presentation/widgets/custom_snackbar.dart';
+import 'package:agenda_cumples/presentation/widgets/widgets.dart';
 
 class CumpleEditScreen extends StatelessWidget {
   const CumpleEditScreen({Key? key}) : super(key: key);
@@ -75,13 +77,18 @@ class _CumpleFormState extends State<CumpleForm> {
   @override
   Widget build(BuildContext context) {
     final cumpleProvider = Provider.of<CumpleProvider>(context, listen: false);
+    final cumple = cumpleProvider.cumple;
+
+    if (cumple.name.isNotEmpty) {
+      nameController.text = cumple.name;
+      cumpleController.text = cumple.date.toString();
+    }
 
     return Form(
       child: Column(
         children: [
           Container(
             margin: const EdgeInsets.symmetric(vertical: 25, horizontal: 80),
-            // Todo: provider con el nombre del cumpleañero
             child: TextFormField(
               controller: nameController,
               decoration: InputDecorations.inputCumple(hintText: 'Miku...', labelText: 'Nombre'),
@@ -92,9 +99,8 @@ class _CumpleFormState extends State<CumpleForm> {
             child: TextFormField(
               controller: cumpleController,
               enabled: false,
-              // Todo: evaluar si hay fecha es porq se selecionó cumpleañero
               decoration: InputDecorations.inputCumple(
-                hintText: '',
+                hintText: '18/02/2014',
                 labelText: 'Cumpleaños',
               ),
             ),
@@ -135,16 +141,20 @@ class _CumpleFormState extends State<CumpleForm> {
     );
   }
 
+  // ToDo: confirmacion de guardado
   _addCumple(CumpleProvider cumpleProvider) {
     if (nameController.text.isNotEmpty && cumpleController.text.isNotEmpty) {
       cumpleProvider.addCumple(nameController.text, selectedDate);
       print('GUARDANDO');
     } else {
       if (nameController.text.isEmpty) {
-        print('**************** NO HAY NOMBRE ***************');
+        ScaffoldMessenger.of(context).showSnackBar(CustomSnackbar(message: 'Debes añadir un nombre'));
+      } else if (nameController.text.trim() == '') {
+        ScaffoldMessenger.of(context).showSnackBar(CustomSnackbar(message: 'No puedes guardar solo espacios'));
       }
+
       if (cumpleController.text.isEmpty) {
-        print('**************** NO HAY CUMPLE ***************');
+        ScaffoldMessenger.of(context).showSnackBar(CustomSnackbar(message: 'Debes elegir una fecha de cumpleaños'));
       }
     }
   }
@@ -161,7 +171,12 @@ class _CumpleFormState extends State<CumpleForm> {
       lastDate: DateTime.now().add(const Duration(days: 365)),
     );
 
-    if (newDate != null) selectedDate = newDate;
-    cumpleController.text = '${newDate!.day}/${newDate.month}/${newDate.year}';
+    if (newDate != null) {
+      selectedDate = newDate;
+
+      String monthWithZero = '0${newDate.month}';
+      String dayWithZero = '0${newDate.day}';
+      cumpleController.text = '${newDate.day < 10 ? dayWithZero : newDate.day}/${newDate.month < 10 ? monthWithZero : newDate.month}/${newDate.year}';
+    }
   }
 }

@@ -99,10 +99,10 @@ class CumpleProvider extends ChangeNotifier {
     return pixels;
   }
 
-  void updateCumpleTest() async {
-    // Cumple cumple = Cumple(name: name, date: date);
-    // await repository.addCumpleFirebase(cumple).then((value) => _cumples.putIfAbsent(cumple, () => false));
-    // getCumples();
+  void updateCumple(String name, DateTime date) async {
+    Cumple newCumple = Cumple(id: cumple.id, name: name, date: date);
+    await repository.updateCumpleFirebase(newCumple); //.then((value) => _cumples.putIfAbsent(cumple, () => false));
+    getCumples();
   }
 
   void addCumple(String name, DateTime date) async {

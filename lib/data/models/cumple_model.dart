@@ -1,8 +1,9 @@
 class Cumple {
+  String id;
   String name;
   DateTime date;
 
-  Cumple({required this.name, required this.date});
+  Cumple({this.id = '', required this.name, required this.date});
 
 // https://www.codegrepper.com/code-examples/dart/firebase+timestamp+to+date+flutter
   Cumple.fromJson(Map<String, dynamic> json)

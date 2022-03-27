@@ -31,7 +31,7 @@ class FirebaseCumplesRepository {
 
     if (cumplesResp.isNotEmpty) {
       for (var cumple in cumplesResp) {
-        var newCumple = Cumple(name: cumple.data().name, date: cumple.data().date);
+        var newCumple = Cumple(id: cumple.id, name: cumple.data().name, date: cumple.data().date);
         cumples.add(newCumple);
       }
     }
@@ -40,8 +40,12 @@ class FirebaseCumplesRepository {
   }
 
   // Todo: Hacer respuesta
-  Future<void> addCumpleFirebase(Cumple cumple) async {
-    Cumple newCumple = Cumple(name: cumple.name, date: cumple.date);
+  Future<void> addCumpleFirebase(Cumple newCumple) async {
     cumplesRef.add(newCumple);
+  }
+
+  Future<void> updateCumpleFirebase(Cumple cumple) async {
+    Map<String, dynamic> newCumple = {'nombre': cumple.name, 'cumple': cumple.date};
+    FirebaseFirestore.instance.collection('cumples').doc(cumple.id).update(newCumple);
   }
 }

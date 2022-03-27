@@ -81,8 +81,14 @@ class _CumpleFormState extends State<CumpleForm> {
 
     if (cumple.name.isNotEmpty) {
       nameController.text = cumple.name;
-      cumpleController.text = cumple.date.toString();
+      String monthWithZero = '0${cumple.date.month}';
+      String dayWithZero = '0${cumple.date.day}';
+      cumpleController.text = '${cumple.date.day < 10 ? dayWithZero : cumple.date.day}/${cumple.date.month < 10 ? monthWithZero : cumple.date.month}/${cumple.date.year}';
+
+      nuevo = false;
     }
+
+
 
     return Form(
       child: Column(
@@ -159,10 +165,14 @@ class _CumpleFormState extends State<CumpleForm> {
     }
   }
 
-  _updateCumple(CumpleProvider cumpleProvider) {
-    cumpleProvider.updateCumpleTest();
-  }
+    _updateCumple(CumpleProvider cumpleProvider) {
+      final List<String> date = cumpleController.text.split('/');
+      final int day = int.parse(date[0]);
+      final int month = int.parse(date[1]);
+      final int year = int.parse(date[2]);
 
+      cumpleProvider.updateCumple(nameController.text, DateTime(year, month, day));
+    }
   _elegirFecha(BuildContext context, TextEditingController cumpleController) async {
     final DateTime? newDate = await showDatePicker(
       context: context,

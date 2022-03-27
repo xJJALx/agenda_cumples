@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:agenda_cumples/presentation/providers/cumple_provider.dart';
 import 'package:agenda_cumples/presentation/widgets/custom_snackbar.dart';
 import 'package:agenda_cumples/presentation/widgets/widgets.dart';
+import 'package:agenda_cumples/presentation/utils/format_date.dart';
 
 class CumpleEditScreen extends StatelessWidget {
   const CumpleEditScreen({Key? key}) : super(key: key);
@@ -81,14 +82,10 @@ class _CumpleFormState extends State<CumpleForm> {
 
     if (cumple.name.isNotEmpty) {
       nameController.text = cumple.name;
-      String monthWithZero = '0${cumple.date.month}';
-      String dayWithZero = '0${cumple.date.day}';
-      cumpleController.text = '${cumple.date.day < 10 ? dayWithZero : cumple.date.day}/${cumple.date.month < 10 ? monthWithZero : cumple.date.month}/${cumple.date.year}';
+      cumpleController.text = formatDate(cumple.date);
 
       nuevo = false;
     }
-
-
 
     return Form(
       child: Column(
@@ -134,9 +131,7 @@ class _CumpleFormState extends State<CumpleForm> {
                 onPressed: () {
                   if (nuevo) _addCumple(cumpleProvider);
 
-                  if (!nuevo) {
-                    _updateCumple(cumpleProvider);
-                  }
+                  if (!nuevo) _updateCumple(cumpleProvider);
                 },
                 child: const Text('Guardar'),
               ),
@@ -153,26 +148,36 @@ class _CumpleFormState extends State<CumpleForm> {
       cumpleProvider.addCumple(nameController.text, selectedDate);
       print('GUARDANDO');
     } else {
-      if (nameController.text.isEmpty) {
-        ScaffoldMessenger.of(context).showSnackBar(CustomSnackbar(message: 'Debes añadir un nombre'));
-      } else if (nameController.text.trim() == '') {
-        ScaffoldMessenger.of(context).showSnackBar(CustomSnackbar(message: 'No puedes guardar solo espacios'));
-      }
-
-      if (cumpleController.text.isEmpty) {
-        ScaffoldMessenger.of(context).showSnackBar(CustomSnackbar(message: 'Debes elegir una fecha de cumpleaños'));
-      }
+      _alertDataCumple();
     }
   }
 
-    _updateCumple(CumpleProvider cumpleProvider) {
-      final List<String> date = cumpleController.text.split('/');
-      final int day = int.parse(date[0]);
-      final int month = int.parse(date[1]);
-      final int year = int.parse(date[2]);
+  _updateCumple(CumpleProvider cumpleProvider) {
+    final List<String> date = cumpleController.text.split('/');
+    final int day = int.parse(date[0]);
+    final int month = int.parse(date[1]);
+    final int year = int.parse(date[2]);
 
+    if (nameController.text.isNotEmpty && cumpleController.text.isNotEmpty) {
       cumpleProvider.updateCumple(nameController.text, DateTime(year, month, day));
+      print('ACTUALIZANDO');
+    } else {
+      _alertDataCumple();
     }
+  }
+
+  _alertDataCumple() {
+    if (nameController.text.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(CustomSnackbar(message: 'Debes añadir un nombre'));
+    } else if (nameController.text.trim() == '') {
+      ScaffoldMessenger.of(context).showSnackBar(CustomSnackbar(message: 'No puedes guardar solo espacios'));
+    }
+
+    if (cumpleController.text.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(CustomSnackbar(message: 'Debes elegir una fecha de cumpleaños'));
+    }
+  }
+
   _elegirFecha(BuildContext context, TextEditingController cumpleController) async {
     final DateTime? newDate = await showDatePicker(
       context: context,
@@ -183,10 +188,7 @@ class _CumpleFormState extends State<CumpleForm> {
 
     if (newDate != null) {
       selectedDate = newDate;
-
-      String monthWithZero = '0${newDate.month}';
-      String dayWithZero = '0${newDate.day}';
-      cumpleController.text = '${newDate.day < 10 ? dayWithZero : newDate.day}/${newDate.month < 10 ? monthWithZero : newDate.month}/${newDate.year}';
+      cumpleController.text = formatDate(newDate);
     }
   }
 }

@@ -85,16 +85,33 @@ class CumpleProvider extends ChangeNotifier {
     // }).toList();
   }
 
-  double goToActualMonth() {
+  double scrollActualCumple() {
     double pixels = 0;
-    double separators = (_today.month - 1) * 60; // 60 height aprox title of month
+    double numTitles = (_today.month - 1) * 60; // 60 height aprox title of month
 
-    for (var i = 0; i < _cumplesResp.length; i++) {
+    for (var i = 0; i < _today.month; i++) {
       if (_cumplesResp[i].date.month == _today.month) {
-        pixels = 220 * i + separators; // 220 height card cumple
-        break;
+        pixels = 220 * i + numTitles; // 220 height card cumple
       }
     }
+
+    return pixels;
+  }
+
+  double scrollNextCumple() {
+    double pixels = 0;
+    double numTitles = 0;
+    double titleHeight = 43;
+    double cardHeight = 220;
+
+    final int nearMonth = _nearCumples.first.date.month;
+    final int numCumples = _cumplesResp.indexWhere((cumple) => cumple.date.month == nearMonth);
+
+    _cumples.forEach((key, value) {
+      if (value == true && key.date.month < nearMonth) numTitles++;
+    });
+
+    pixels = (numCumples * cardHeight) + (numTitles * titleHeight);
 
     return pixels;
   }
@@ -105,6 +122,7 @@ class CumpleProvider extends ChangeNotifier {
     getCumples();
   }
 
+  //ToDo: al añadir un cumple asignar el id del que se acaba de crear para que no se sigan insertando nuevos
   void addCumple(String name, DateTime date) async {
     final DateTime dateFormat = date.add(const Duration(hours: 12));
     Cumple cumple = Cumple(name: name, date: dateFormat);

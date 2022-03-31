@@ -67,18 +67,18 @@ class _Cumples extends StatelessWidget {
   Widget build(BuildContext context) {
     final cumpleProvider = Provider.of<CumpleProvider>(context);
     final cumples = cumpleProvider.allCumples;
-    double _positionScroll = cumpleProvider.goToActualMonth();
+    double _positionScroll = cumpleProvider.scrollNextCumple();
 
     void _animateToIndex() {
       _controller.animateTo(
         _positionScroll,
-        duration: const Duration(seconds: 3),
+        duration: const Duration(milliseconds: 1850),
         curve: Curves.easeInOut,
       );
     }
 
     WidgetsBinding.instance?.addPostFrameCallback((_) {
-      Future.delayed(const Duration(milliseconds: 550), (() => _animateToIndex()));
+      Future.delayed(const Duration(milliseconds: 400), (() => _animateToIndex()));
     });
 
     return Expanded(

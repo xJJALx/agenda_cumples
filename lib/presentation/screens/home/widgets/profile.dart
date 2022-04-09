@@ -30,7 +30,7 @@ class Avatar extends StatelessWidget {
       children: const [
         CircleAvatar(
           radius: 35,
-          backgroundImage: NetworkImage('https://64.media.tumblr.com/4fbb812fbad16085366148fa1005800f/a3dd7b1595f9b809-b2/s1280x1920/c7d0af53899af7d8e5f37d49b83c3296cbeeb9fc.jpg'),
+          backgroundImage: AssetImage('assets/WinterMask.jpeg'),
         ),
         SizedBox(height: 10),
         Text(

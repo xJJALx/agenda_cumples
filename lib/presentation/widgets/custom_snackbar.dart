@@ -5,13 +5,16 @@ class CustomSnackbar extends SnackBar {
     Key? key,
     required String message,
     String btnLabel = 'OK',
-    Color bgColor = Colors.redAccent,
+    Color bgColor = Colors.black,
     Color textColor = Colors.white,
     Duration duration = const Duration(seconds: 3),
     VoidCallback? onOk,
   }) : super(
           key: key,
-          content: Text(message),
+          content: Text(
+            message,
+            style: TextStyle(color: textColor),
+          ),
           duration: duration,
           backgroundColor: bgColor,
           action: SnackBarAction(

@@ -110,7 +110,6 @@ class CumpleProvider extends ChangeNotifier {
 
     // Control si no hay cumple cercano
     indexCumple == -1 ? numCumples = 99 : numCumples = indexCumple;
-    
 
     _cumples.forEach((key, value) {
       if (value == true && key.date.month < nearMonth) numTitles++;
@@ -121,24 +120,32 @@ class CumpleProvider extends ChangeNotifier {
     return pixels;
   }
 
-  void updateCumple(String name, DateTime date) async {
-    Cumple newCumple = Cumple(id: cumple.id, name: name, date: date);
-    await repository.updateCumpleFirebase(newCumple); //.then((value) => _cumples.putIfAbsent(cumple, () => false));
-    getCumples();
+  Future<bool> updateCumple(String name, DateTime date) async {
+    final DateTime dateFormat = DateTime(date.year, date.month, date.day, 12);
+    Cumple newCumple = Cumple(id: cumple.id, name: name, date: dateFormat);
+
+    final resp = await repository.updateCumpleFirebase(newCumple);
+
+    getCumples();    
+
+    return resp;
   }
 
-  //ToDo: al añadir un cumple asignar el id del que se acaba de crear para que no se sigan insertando nuevos
-  void addCumple(String name, DateTime date) async {
-    final DateTime dateFormat = date.add(const Duration(hours: 12));
+  Future<String> addCumple(String name, DateTime date) async {
+    final DateTime dateFormat = DateTime(date.year, date.month, date.day, 12);
     Cumple cumple = Cumple(name: name, date: dateFormat);
+    String resp = '';
 
     await repository.addCumpleFirebase(cumple).then((id) {
       _cumple = cumple;
       _cumple.id = id;
       _cumples.putIfAbsent(cumple, () => false);
+      resp = id;
     });
 
     getCumples();
+
+    return resp;
   }
 
   void clearCumple() {

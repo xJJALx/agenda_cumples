@@ -74,7 +74,6 @@ class _CumpleFormState extends State<CumpleForm> {
   final TextEditingController nameController = TextEditingController();
   DateTime selectedDate = DateTime.now();
 
-
   @override
   Widget build(BuildContext context) {
     final cumpleProvider = Provider.of<CumpleProvider>(context, listen: false);
@@ -140,42 +139,6 @@ class _CumpleFormState extends State<CumpleForm> {
     );
   }
 
-  // ToDo: confirmacion de guardado
-  _addCumple(CumpleProvider cumpleProvider) {
-    if (nameController.text.isNotEmpty && cumpleController.text.isNotEmpty) {
-      cumpleProvider.addCumple(nameController.text, selectedDate);
-      print('GUARDANDO');
-    } else {
-      _alertDataCumple();
-    }
-  }
-
-  _updateCumple(CumpleProvider cumpleProvider) {
-    final List<String> date = cumpleController.text.split('/');
-    final int day = int.parse(date[0]);
-    final int month = int.parse(date[1]);
-    final int year = int.parse(date[2]);
-
-    if (nameController.text.isNotEmpty && cumpleController.text.isNotEmpty) {
-      cumpleProvider.updateCumple(nameController.text, DateTime(year, month, day));
-      print('ACTUALIZANDO');
-    } else {
-      _alertDataCumple();
-    }
-  }
-
-  _alertDataCumple() {
-    if (nameController.text.isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(CustomSnackbar(message: 'Debes añadir un nombre'));
-    } else if (nameController.text.trim() == '') {
-      ScaffoldMessenger.of(context).showSnackBar(CustomSnackbar(message: 'No puedes guardar solo espacios'));
-    }
-
-    if (cumpleController.text.isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(CustomSnackbar(message: 'Debes elegir una fecha de cumpleaños'));
-    }
-  }
-
   _elegirFecha(BuildContext context, TextEditingController cumpleController) async {
     final DateTime? newDate = await showDatePicker(
       context: context,
@@ -189,4 +152,82 @@ class _CumpleFormState extends State<CumpleForm> {
       cumpleController.text = formatDate(newDate);
     }
   }
+
+  _addCumple(CumpleProvider cumpleProvider) {
+    if (nameController.text.isNotEmpty && cumpleController.text.isNotEmpty) {
+      final resp = cumpleProvider.addCumple(nameController.text, selectedDate);
+
+      resp.toString() != '' 
+      ? _showConfirmation('Cumpleaños creado') 
+      : _showError('Ha ocurrido un error');
+    } else {
+      _showWarning();
+    }
+  }
+
+  _updateCumple(CumpleProvider cumpleProvider) async {
+    final List<String> date = cumpleController.text.split('/');
+    final int day = int.parse(date[0]);
+    final int month = int.parse(date[1]);
+    final int year = int.parse(date[2]);
+
+    if (nameController.text.isNotEmpty && cumpleController.text.isNotEmpty) {
+      final resp = await cumpleProvider.updateCumple(nameController.text, DateTime(year, month, day));
+
+      resp == true 
+      ? _showConfirmation('Cumpleaños actualizado') 
+      : _showError('Ha ocurrido un error');
+      
+    } else {
+      _showWarning();
+    }
+  }
+
+  _showConfirmation(String message) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      CustomSnackbar(
+        message: message,
+        bgColor: Colors.lightGreen,
+      ),
+    );
+  }
+
+  _showError(String message) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      CustomSnackbar(
+        message: message,
+        bgColor: Colors.redAccent,
+      ),
+    );
+  }
+
+  _showWarning() {
+    const Color bgColor = Colors.yellow;
+    const Color textColor = Colors.black87;
+
+    if (nameController.text.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        CustomSnackbar(
+          message: 'Debes añadir un nombre',
+          bgColor: bgColor,
+          textColor: textColor,
+        ),
+      );
+    } else if (nameController.text.trim() == '') {
+      ScaffoldMessenger.of(context).showSnackBar(CustomSnackbar(
+        message: 'No puedes guardar solo espacios',
+        bgColor: bgColor,
+        textColor: textColor,
+      ));
+    }
+
+    if (cumpleController.text.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(CustomSnackbar(
+        message: 'Debes elegir una fecha de cumpleaños',
+        bgColor: bgColor,
+        textColor: textColor,
+      ));
+    }
+  }
+
 }

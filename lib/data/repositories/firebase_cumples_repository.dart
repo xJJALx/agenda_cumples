@@ -38,14 +38,17 @@ class FirebaseCumplesRepository {
     return cumples;
   }
 
-
   Future<String> addCumpleFirebase(Cumple newCumple) async {
     final resp = await cumplesRef.add(newCumple);
     return resp.id;
   }
 
-  Future<void> updateCumpleFirebase(Cumple cumple) async {
+  Future<bool> updateCumpleFirebase(Cumple cumple) async {
+    bool resp = false;
     Map<String, dynamic> newCumple = {'nombre': cumple.name, 'cumple': cumple.date};
-    FirebaseFirestore.instance.collection('cumples').doc(cumple.id).update(newCumple);
+
+    await FirebaseFirestore.instance.collection('cumples').doc(cumple.id).update(newCumple).then((value) => resp = true).catchError((error) => resp = false);
+
+    return resp;
   }
 }

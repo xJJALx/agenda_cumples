@@ -140,6 +140,7 @@ class _Cumples extends StatelessWidget {
             },
             blendMode: BlendMode.dstOut,
             child: ListView.builder(
+              physics: const BouncingScrollPhysics(),
               itemCount: cumples.length,
               itemBuilder: (_, i) => Center(
                 child: CumpleCard(cumples[i]),

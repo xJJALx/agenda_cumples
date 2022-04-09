@@ -72,7 +72,9 @@ class _Cumples extends StatelessWidget {
     void _animateToIndex() {
       _controller.animateTo(
         _positionScroll,
-        duration: const Duration(milliseconds: 1850),
+        duration: _positionScroll < 2500 
+          ? const Duration(milliseconds: 1850) 
+          :const Duration(milliseconds: 4500),
         curve: Curves.easeInOut,
       );
     }
@@ -81,21 +83,26 @@ class _Cumples extends StatelessWidget {
       Future.delayed(const Duration(milliseconds: 400), (() => _animateToIndex()));
     });
 
-    return Expanded(
-      child: ListView.builder(
-        controller: _controller,
-        itemCount: cumples.length,
-        itemBuilder: (_, i) {
-          var cumple = cumples.keys.elementAt(i);
+    if (cumples.isNotEmpty) {
+      return Expanded(
+        child: ListView.builder(
+          physics: const NeverScrollableScrollPhysics(),
+          controller: _controller,
+          itemCount: cumples.length,
+          itemBuilder: (_, i) {
+            var cumple = cumples.keys.elementAt(i);
 
-          if (cumples.values.elementAt(i)) {
-            return Center(child: CumpleCardTitle(cumple));
-          } else {
-            return Center(child: CumpleCard(cumple));
-          }
-        },
-      ),
-    );
+            if (cumples.values.elementAt(i)) {
+              return Center(child: CumpleCardTitle(cumple));
+            } else {
+              return Center(child: CumpleCard(cumple));
+            }
+          },
+        ),
+      );
+    } else {
+      return const CircularProgressIndicator();
+    }
   }
 }
 

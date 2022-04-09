@@ -14,7 +14,6 @@ class FirebaseCumplesRepository {
 
   static Future initializeApp() async {
     await Firebase.initializeApp(
-      // Replace with actual values
       options: const FirebaseOptions(
         apiKey: "XXX",
         appId: "XXX",
@@ -39,9 +38,10 @@ class FirebaseCumplesRepository {
     return cumples;
   }
 
-  // Todo: Hacer respuesta
-  Future<void> addCumpleFirebase(Cumple newCumple) async {
-    cumplesRef.add(newCumple);
+
+  Future<String> addCumpleFirebase(Cumple newCumple) async {
+    final resp = await cumplesRef.add(newCumple);
+    return resp.id;
   }
 
   Future<void> updateCumpleFirebase(Cumple cumple) async {

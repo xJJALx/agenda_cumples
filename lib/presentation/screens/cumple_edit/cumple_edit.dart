@@ -73,7 +73,7 @@ class _CumpleFormState extends State<CumpleForm> {
   final TextEditingController cumpleController = TextEditingController();
   final TextEditingController nameController = TextEditingController();
   DateTime selectedDate = DateTime.now();
-  bool nuevo = true;
+
 
   @override
   Widget build(BuildContext context) {
@@ -83,8 +83,6 @@ class _CumpleFormState extends State<CumpleForm> {
     if (cumple.name.isNotEmpty) {
       nameController.text = cumple.name;
       cumpleController.text = formatDate(cumple.date);
-
-      nuevo = false;
     }
 
     return Form(
@@ -129,9 +127,9 @@ class _CumpleFormState extends State<CumpleForm> {
                   textStyle: const TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
                 ),
                 onPressed: () {
-                  if (nuevo) _addCumple(cumpleProvider);
+                  if (cumpleProvider.cumple.id == '') _addCumple(cumpleProvider);
 
-                  if (!nuevo) _updateCumple(cumpleProvider);
+                  if (cumpleProvider.cumple.id != '') _updateCumple(cumpleProvider);
                 },
                 child: const Text('Guardar'),
               ),

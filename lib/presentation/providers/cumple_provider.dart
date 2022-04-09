@@ -103,9 +103,14 @@ class CumpleProvider extends ChangeNotifier {
     double numTitles = 0;
     double titleHeight = 43;
     double cardHeight = 220;
+    int numCumples = 0;
 
-    final int nearMonth = _nearCumples.first.date.month;
-    final int numCumples = _cumplesResp.indexWhere((cumple) => cumple.date.month == nearMonth);
+    final int nearMonth = _nearCumples.isEmpty ? _today.month : _nearCumples.first.date.month;
+    final int indexCumple = _cumplesResp.indexWhere((cumple) => cumple.date.month == nearMonth);
+
+    // Control si no hay cumple cercano
+    indexCumple == -1 ? numCumples = 99 : numCumples = indexCumple;
+    
 
     _cumples.forEach((key, value) {
       if (value == true && key.date.month < nearMonth) numTitles++;
@@ -127,7 +132,12 @@ class CumpleProvider extends ChangeNotifier {
     final DateTime dateFormat = date.add(const Duration(hours: 12));
     Cumple cumple = Cumple(name: name, date: dateFormat);
 
-    await repository.addCumpleFirebase(cumple).then((value) => _cumples.putIfAbsent(cumple, () => false));
+    await repository.addCumpleFirebase(cumple).then((id) {
+      _cumple = cumple;
+      _cumple.id = id;
+      _cumples.putIfAbsent(cumple, () => false);
+    });
+
     getCumples();
   }
 

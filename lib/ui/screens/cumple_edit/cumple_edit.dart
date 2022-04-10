@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'package:agenda_cumples/presentation/providers/cumple_provider.dart';
-import 'package:agenda_cumples/presentation/widgets/custom_snackbar.dart';
-import 'package:agenda_cumples/presentation/widgets/widgets.dart';
-import 'package:agenda_cumples/presentation/utils/format_date.dart';
+import 'package:agenda_cumples/ui/providers/cumple_provider.dart';
+import 'package:agenda_cumples/ui/widgets/custom_snackbar.dart';
+import 'package:agenda_cumples/ui/widgets/widgets.dart';
+import 'package:agenda_cumples/ui/utils/format_date.dart';
 
 class CumpleEditScreen extends StatelessWidget {
   const CumpleEditScreen({Key? key}) : super(key: key);

@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'package:agenda_cumples/data/models/models.dart';
-import 'package:agenda_cumples/presentation/routes/routes.dart';
-import 'package:agenda_cumples/presentation/screens/screens.dart';
-import 'package:agenda_cumples/presentation/providers/cumple_provider.dart';
+import 'package:agenda_cumples/ui/routes/routes.dart';
+import 'package:agenda_cumples/ui/screens/screens.dart';
+import 'package:agenda_cumples/ui/providers/cumple_provider.dart';
 
-import 'package:agenda_cumples/presentation/utils/gradient_colors.dart';
-import 'package:agenda_cumples/presentation/utils/month_text.dart';
+import 'package:agenda_cumples/ui/utils/gradient_colors.dart';
+import 'package:agenda_cumples/ui/utils/month_text.dart';
 
 class CumpleCard extends StatelessWidget {
   const CumpleCard(this.cumple, {Key? key}) : super(key: key);

@@ -1,11 +1,10 @@
-import 'package:agenda_cumples/data/models/models.dart';
-import 'package:agenda_cumples/presentation/providers/cumple_provider.dart';
-import 'package:agenda_cumples/presentation/routes/routes.dart';
-import 'package:agenda_cumples/presentation/screens/screens.dart';
+import 'package:agenda_cumples/ui/providers/cumple_provider.dart';
+import 'package:agenda_cumples/ui/routes/routes.dart';
+import 'package:agenda_cumples/ui/screens/screens.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'package:agenda_cumples/presentation/widgets/btn_back.dart';
+import 'package:agenda_cumples/ui/widgets/btn_back.dart';
 
 class CumpleDetailsScreen extends StatelessWidget {
   const CumpleDetailsScreen({Key? key}) : super(key: key);
@@ -17,11 +16,9 @@ class CumpleDetailsScreen extends StatelessWidget {
     return Scaffold(
       body: Column(
         children: [
-          BtnBack(
-            color: Colors.redAccent,
-          ),
+          const BtnBack(color: Colors.redAccent),
           Text(cumpleProvider.cumple.name),
-          Text(cumpleProvider.cumple.date.toString())
+          Text(cumpleProvider.cumple.date.toString()),
         ],
       ),
       floatingActionButton: FloatingActionButton(

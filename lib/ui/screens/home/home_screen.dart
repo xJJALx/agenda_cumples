@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import 'package:agenda_cumples/presentation/providers/cumple_provider.dart';
-import 'package:agenda_cumples/presentation/routes/routes.dart';
-import 'package:agenda_cumples/presentation/screens/screens.dart';
+import 'package:agenda_cumples/ui/providers/cumple_provider.dart';
+import 'package:agenda_cumples/ui/routes/routes.dart';
+import 'package:agenda_cumples/ui/screens/screens.dart';
 
-import 'package:agenda_cumples/presentation/screens/home/widgets/action_item.dart';
-import 'package:agenda_cumples/presentation/screens/home/widgets/profile.dart';
-import 'package:agenda_cumples/presentation/widgets/cumple_card.dart';
+import 'package:agenda_cumples/ui/screens/home/widgets/action_item.dart';
+import 'package:agenda_cumples/ui/screens/home/widgets/profile.dart';
+import 'package:agenda_cumples/ui/widgets/cumple_card.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key}) : super(key: key);

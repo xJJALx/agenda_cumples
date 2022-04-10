@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:agenda_cumples/presentation/screens/screens.dart';
+import 'package:agenda_cumples/ui/screens/screens.dart';
 
 final Map<String, Widget Function(BuildContext)> appRoutes = {
   'home': (_) => const HomeScreen(),

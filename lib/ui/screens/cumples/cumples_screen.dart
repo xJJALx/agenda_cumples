@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
-import 'package:agenda_cumples/presentation/routes/routes.dart';
-import 'package:agenda_cumples/presentation/screens/screens.dart';
-import 'package:agenda_cumples/presentation/widgets/widgets.dart';
+import 'package:agenda_cumples/ui/routes/routes.dart';
+import 'package:agenda_cumples/ui/screens/screens.dart';
+import 'package:agenda_cumples/ui/widgets/widgets.dart';
 
 import 'package:provider/provider.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:agenda_cumples/presentation/providers/cumple_provider.dart';
+import 'package:agenda_cumples/ui/providers/cumple_provider.dart';
 
 // Todo cambiar appbar statico por uno que se oculte
 class CumplesScreen extends StatelessWidget {

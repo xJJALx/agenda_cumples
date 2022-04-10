@@ -1,7 +1,7 @@
 import 'package:agenda_cumples/data/repositories/firebase_cumples_repository.dart';
-import 'package:agenda_cumples/presentation/providers/cumple_provider.dart';
+import 'package:agenda_cumples/ui/providers/cumple_provider.dart';
 import 'package:flutter/material.dart';
-import 'package:agenda_cumples/presentation/routes/routes.dart';
+import 'package:agenda_cumples/ui/routes/routes.dart';
 import 'package:provider/provider.dart';
 
 void main() async {

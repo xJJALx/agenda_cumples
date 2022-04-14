@@ -75,10 +75,10 @@ class MenuActions extends StatelessWidget {
           ),
         ),
         GestureDetector(
-          onTap: () => Navigator.pushNamed(context, 'notas'),
+          onTap: () =>Navigator.push(context, CustomPageRoute(child: const EstadisticasScreen())),
           child: const ActionItem(
-            title: 'notas',
-            icon: Icons.note,
+            title: 'estadísticas',
+            icon: Icons.insert_chart_outlined_outlined,
             color: Color(0xFFfce5cd),
             colorIcon: Color(0xFFf5a655),
           ),

@@ -1,4 +1,5 @@
 import 'package:agenda_cumples/data/repositories/firebase_cumples_repository.dart';
+import 'package:agenda_cumples/ui/utils/month_text.dart';
 import 'package:flutter/cupertino.dart';
 
 import 'package:agenda_cumples/data/models/models.dart';
@@ -9,6 +10,7 @@ import 'package:agenda_cumples/data/models/models.dart';
 
 class CumpleProvider extends ChangeNotifier {
   final DateTime _today = DateTime.now();
+  final Map<String, double> _statistics = {};
   Map<Cumple, bool> _cumples = {};
   List<Cumple> _cumplesResp = [];
   List<Cumple> _nearCumples = [];
@@ -16,6 +18,7 @@ class CumpleProvider extends ChangeNotifier {
   late Cumple _cumple;
 
   Map<Cumple, bool> get allCumples => _cumples;
+  Map<String, double> get statistics => _statistics;
   List<Cumple> get nearCumples => _nearCumples;
   DateTime get today => _today;
   Cumple get cumple => _cumple;
@@ -36,6 +39,7 @@ class CumpleProvider extends ChangeNotifier {
     sortCumples();
     getNearCumples();
     setMonthTitle();
+    getStatistics();
 
     notifyListeners();
   }
@@ -61,6 +65,19 @@ class CumpleProvider extends ChangeNotifier {
     _cumplesResp.sort((a, b) => a.date.day.compareTo(b.date.day));
     _cumplesResp.sort((a, b) => a.date.month.compareTo(b.date.month));
     notifyListeners();
+  }
+
+  void getStatistics() {
+    List<String> months = [];
+
+    for (var cumple in _cumplesResp) {
+      String month = getMonth(cumple.date.month);
+      months.add(month);
+    }
+
+    for (var key in months) {
+      _statistics[key] = !_statistics.containsKey(key) ? (1) : (_statistics[key]! + 1);
+    }
   }
 
   void getNearCumples() async {
@@ -126,7 +143,7 @@ class CumpleProvider extends ChangeNotifier {
 
     final resp = await repository.updateCumpleFirebase(newCumple);
 
-    getCumples();    
+    getCumples();
 
     return resp;
   }

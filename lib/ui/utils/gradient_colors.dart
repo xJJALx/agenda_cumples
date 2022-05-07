@@ -36,3 +36,20 @@ List<Color> gradientColorsTypeTwo = [
   const Color.fromARGB(255, 89, 100, 175),
   const Color.fromARGB(255, 66, 54, 99),
 ];
+
+
+List<Color> gradientColorsTypePastel = const [
+  Color.fromARGB(218, 87, 109, 255),
+  Color.fromARGB(221, 163, 220, 247),
+  Color.fromARGB(211, 58, 228, 250),
+  Color.fromARGB(166, 205, 248, 207),
+  Color.fromARGB(218, 193, 245, 138),
+  Color.fromARGB(228, 248, 239, 159),
+  Color.fromARGB(221, 248, 146, 115),
+  Color.fromARGB(221, 252, 107, 107),
+  Color.fromARGB(221, 241, 123, 166),
+  Color.fromARGB(255, 234, 160, 247),
+  Color.fromARGB(214, 217, 122, 243),
+  Color.fromARGB(255, 154, 169, 243),
+  Color.fromARGB(228, 108, 127, 247),
+];

@@ -15,7 +15,7 @@ class EstadisticasScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white.withOpacity(0.9),
+      backgroundColor: const Color.fromARGB(255, 245, 241, 241),
       body: SizedBox(
         child: Stack(
           children: [
@@ -76,6 +76,8 @@ class _DatosExtra extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final cumpleProvider = Provider.of<CumpleProvider>(context);
+
     return Padding(
       padding: const EdgeInsets.all(25),
       child: Column(
@@ -83,16 +85,28 @@ class _DatosExtra extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           Text(
-            'Cumpleaños totales: XX',
-            style: GoogleFonts.play(fontSize: 25, color: Colors.black, fontWeight: FontWeight.w500,),
+            'Cumpleaños totales: ${cumpleProvider.countCumples()}',
+            style: GoogleFonts.play(
+              fontSize: 25,
+              color: Colors.black,
+              fontWeight: FontWeight.w500,
+            ),
           ),
           Text(
-            'Mes más común: XX',
-            style: GoogleFonts.play(fontSize: 25, color: Colors.black, fontWeight: FontWeight.w500,),
+            'Mes más común: ${cumpleProvider.getMostCommonMonth()}',
+            style: GoogleFonts.play(
+              fontSize: 25,
+              color: Colors.black,
+              fontWeight: FontWeight.w500,
+            ),
           ),
           Text(
-            'Nombre más común: XX',
-            style: GoogleFonts.play(fontSize: 25, color: Colors.black, fontWeight: FontWeight.w500,),
+            'Día más común: ${cumpleProvider.getMostCommonDay()}',
+            style: GoogleFonts.play(
+              fontSize: 25,
+              color: Colors.black,
+              fontWeight: FontWeight.w500,
+            ),
           ),
         ],
       ),

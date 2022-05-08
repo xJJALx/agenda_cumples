@@ -7,7 +7,7 @@ import 'package:agenda_cumples/data/models/models.dart';
 
 // * Para manejar que cumpleaños es el primero del mes en una lista, creamos un mapa
 // * con el cumple y una propiedad bool
-
+// TODO Buscador
 class CumpleProvider extends ChangeNotifier {
   final DateTime _today = DateTime.now();
   final Map<String, double> _statistics = {};
@@ -78,6 +78,7 @@ class CumpleProvider extends ChangeNotifier {
     for (var key in months) {
       _statistics[key] = !_statistics.containsKey(key) ? (1) : (_statistics[key]! + 1);
     }
+    getMostCommonMonth();
   }
 
   void getNearCumples() async {
@@ -169,5 +170,41 @@ class CumpleProvider extends ChangeNotifier {
     Cumple cumpleAux = Cumple(name: '', date: DateTime(1900, 1, 1));
     cumple = cumpleAux;
     notifyListeners();
+  }
+
+  int getAge() {
+    int years = _today.year - _cumple.date.year;
+    int months = _today.month - _cumple.date.month;
+
+    if (months < 0 && years > 0 || (months == 0 && _today.day < _today.day)) years--;
+
+    return years;
+  }
+
+  int countCumples() => _cumplesResp.length;
+
+  String getMostCommonMonth() {
+    String common = '';
+    double aux = 0;
+
+    _statistics.forEach((key, value) {
+      if (aux < value) {
+        common = key;
+        aux = value;
+      }
+    });
+
+    return common;
+  }
+
+  int getMostCommonDay() {
+    int common = 0;
+    int aux = 0;
+
+    for (var cumple in _cumplesResp) {
+      if (aux < cumple.date.day) common = cumple.date.day;
+    }
+
+    return common;
   }
 }

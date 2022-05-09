@@ -32,8 +32,7 @@ class CumpleDetailsScreen extends StatelessWidget {
           children: [
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 50),
-              // Todo: Deshabilitar touch en esta pantalla
-              child:  CumpleCard(cumple),
+              child:  AbsorbPointer(child: CumpleCard(cumple), absorbing: true,),
             ),
             Column(
               mainAxisAlignment: MainAxisAlignment.center,

@@ -86,7 +86,7 @@ class _Cumples extends StatelessWidget {
     if (cumples.isNotEmpty) {
       return Expanded(
         child: ListView.builder(
-          physics: const NeverScrollableScrollPhysics(),
+          physics: const BouncingScrollPhysics(),
           controller: _controller,
           itemCount: cumples.length,
           itemBuilder: (_, i) {

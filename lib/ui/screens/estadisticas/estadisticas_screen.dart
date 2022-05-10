@@ -10,7 +10,9 @@ import 'package:agenda_cumples/ui/utils/gradient_colors.dart';
 import 'package:agenda_cumples/ui/utils/month_text.dart';
 
 class EstadisticasScreen extends StatelessWidget {
-  const EstadisticasScreen({Key? key}) : super(key: key);
+  const EstadisticasScreen({Key? key, this.tipo = ''}) : super(key: key);
+
+  final String tipo;
 
   @override
   Widget build(BuildContext context) {
@@ -19,14 +21,12 @@ class EstadisticasScreen extends StatelessWidget {
       body: SizedBox(
         child: Stack(
           children: [
-            SafeArea(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: const [
-                  BtnBack(color: Colors.black),
-                  _Titulo(),
-                ],
-              ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                tipo != 'pageView' ? const BtnBack(color: Colors.black) : const SizedBox(width: 10),
+                const _Titulo(),
+              ],
             ),
             Positioned(top: 100, left: 0, child: _Grafica()),
             const _BottomModal()
@@ -42,11 +42,13 @@ class _Titulo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20),
-      child: Text(
-        'Estadísticas',
-        style: GoogleFonts.play(fontSize: 30),
+    return SafeArea(
+      child: Padding(
+        padding: const EdgeInsets.all(10),
+        child: Text(
+          'Estadísticas',
+          style: GoogleFonts.play(fontSize: 34),
+        ),
       ),
     );
   }
@@ -70,7 +72,6 @@ class _BottomModal extends StatelessWidget {
   }
 }
 
-// TODO: Crear funciones para los datos extra
 class _DatosExtra extends StatelessWidget {
   const _DatosExtra({Key? key}) : super(key: key);
 

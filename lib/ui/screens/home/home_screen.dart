@@ -10,20 +10,52 @@ import 'package:agenda_cumples/ui/screens/home/widgets/action_item.dart';
 import 'package:agenda_cumples/ui/screens/home/widgets/profile.dart';
 import 'package:agenda_cumples/ui/widgets/cumple_card.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  final PageController _controller = PageController(
+    initialPage: 0,
+  );
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      body: Column(
+      body: PageView(
+        controller: _controller,
         children: const [
-          HomeHeader(),
-          SizedBox(height: 50),
-          Expanded(child: CumplesSection()),
+          _Home(),
+          EstadisticasScreen(tipo: 'pageView'),
         ],
       ),
+    );
+  }
+}
+
+class _Home extends StatelessWidget {
+  const _Home({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: const [
+        HomeHeader(),
+        SizedBox(height: 50),
+        Expanded(child: CumplesSection()),
+      ],
     );
   }
 }

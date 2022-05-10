@@ -1,4 +1,5 @@
 import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -9,15 +10,12 @@ import 'package:agenda_cumples/ui/routes/routes.dart';
 import 'package:agenda_cumples/ui/widgets/widgets.dart';
 
 
-
 class CumpleDetailsScreen extends StatelessWidget {
   const CumpleDetailsScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     String img = randomImg();
-    final cumpleProvider = Provider.of<CumpleProvider>(context);
-    final cumple = cumpleProvider.cumple;
 
     return Scaffold(
       body: Container(
@@ -29,31 +27,9 @@ class CumpleDetailsScreen extends StatelessWidget {
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 50),
-              child:  AbsorbPointer(child: CumpleCard(cumple), absorbing: true,),
-            ),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const SizedBox(height: 20),
-                Text(
-                  cumple.name,
-                  style: GoogleFonts.play(fontSize: 45, color: Colors.black, fontWeight: FontWeight.w500),
-                ),
-                const SizedBox(height: 20),
-                Text(
-                  cumple.date.year.toString(),
-                  style: GoogleFonts.play(fontSize: 45, color: Colors.black, fontWeight: FontWeight.w500),
-                ),
-                const SizedBox(height: 20),
-                Text(
-                  '${cumpleProvider.getAge()} años',
-                  style: GoogleFonts.play(fontSize: 45, color: Colors.black, fontWeight: FontWeight.w500),
-                ),
-              ],
-            ),
+          children: const [
+            _SplashCumpleCard(),
+            _InfoCumple(),
           ],
         ),
       ),
@@ -86,7 +62,72 @@ class CumpleDetailsScreen extends StatelessWidget {
       default:
         img = 'four';
     }
-    print(num);
     return img;
+  }
+}
+
+class _SplashCumpleCard extends StatelessWidget {
+  const _SplashCumpleCard({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final cumple = Provider.of<CumpleProvider>(context).cumple;
+
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 50),
+      child: Stack(
+        children: [
+          AbsorbPointer(
+            child: CumpleCard(cumple),
+            absorbing: true,
+          ),
+          Padding(
+            padding: const EdgeInsets.all(12),
+            child: InkWell(
+              onTap: () {},
+              splashColor: Colors.cyanAccent,
+              borderRadius: BorderRadius.circular(20),
+              hoverColor: Colors.transparent,
+              child: Ink(
+                width: double.infinity,
+                height: 196,
+                color: Colors.transparent,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _InfoCumple extends StatelessWidget {
+  const _InfoCumple({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final cumpleProvider = Provider.of<CumpleProvider>(context);
+    final cumple = cumpleProvider.cumple;
+
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        const SizedBox(height: 20),
+        Text(
+          cumple.name,
+          style: GoogleFonts.play(fontSize: 45, color: Colors.black, fontWeight: FontWeight.w500),
+        ),
+        const SizedBox(height: 20),
+        Text(
+          cumple.date.year.toString(),
+          style: GoogleFonts.play(fontSize: 45, color: Colors.black, fontWeight: FontWeight.w500),
+        ),
+        const SizedBox(height: 20),
+        Text(
+          '${cumpleProvider.getAge()} años',
+          style: GoogleFonts.play(fontSize: 45, color: Colors.black, fontWeight: FontWeight.w500),
+        ),
+      ],
+    );
   }
 }

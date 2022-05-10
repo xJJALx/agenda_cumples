@@ -37,6 +37,22 @@ List<Color> gradientColorsTypeTwo = [
   const Color.fromARGB(255, 66, 54, 99),
 ];
 
+List<Color> gradientColorsTypeThree = [
+  const Color(0xff3949AB).withOpacity(0.7),
+  const Color(0xff4FC3F7).withOpacity(0.7),
+  const Color(0xff00ACC1).withOpacity(0.7),
+  const Color(0xffA5D6A7).withOpacity(0.7),
+  const Color(0xff7CB342).withOpacity(0.7),
+  const Color(0xffFFF176).withOpacity(0.7),
+  const Color(0xffFF8A65).withOpacity(0.7),
+  const Color(0xffD50000).withOpacity(0.7),
+  const Color(0xffD81B60).withOpacity(0.7),
+  const Color(0xffBA68C8).withOpacity(0.7),
+  const Color(0xff8E24AA).withOpacity(0.7),
+  const Color(0xff7986CB).withOpacity(0.7),
+  const Color(0xff3949AB).withOpacity(0.7),
+];
+
 
 List<Color> gradientColorsTypePastel = const [
   Color.fromARGB(218, 87, 109, 255),

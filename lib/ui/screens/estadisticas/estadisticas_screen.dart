@@ -17,7 +17,7 @@ class EstadisticasScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color.fromARGB(255, 245, 241, 241),
+      backgroundColor: Colors.white,
       body: SizedBox(
         child: Stack(
           children: [
@@ -63,7 +63,7 @@ class _BottomModal extends StatelessWidget {
       initialChildSize: 0.32,
       builder: (context, scrollController) => Container(
         decoration: const BoxDecoration(
-          color: Colors.white,
+          color: Color(0xFFf4f2fe),
           borderRadius: BorderRadius.vertical(top: Radius.circular(50.0)),
         ),
         child: const _DatosExtra(),
@@ -120,7 +120,7 @@ class _Grafica extends StatelessWidget {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     final stats = Provider.of<CumpleProvider>(context).statistics;
-    List<Color> colors = getColors(stats, gradientColorsTypePastel);
+    List<Color> colors = getColors(stats, gradientColorsTypeThree);
     // List<List<Color>> colors = getGradientColors(stats, gradientColorsTypePastel);
 
     return Container(

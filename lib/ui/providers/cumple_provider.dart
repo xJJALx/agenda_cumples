@@ -23,6 +23,8 @@ class CumpleProvider extends ChangeNotifier {
   DateTime get today => _today;
   Cumple get cumple => _cumple;
 
+   int countCumples() => _cumplesResp.length;
+
   CumpleProvider() {
     getCumples();
   }
@@ -69,6 +71,7 @@ class CumpleProvider extends ChangeNotifier {
 
   void getStatistics() {
     List<String> months = [];
+    _statistics.clear();
 
     for (var cumple in _cumplesResp) {
       String month = getMonth(cumple.date.month);
@@ -78,7 +81,6 @@ class CumpleProvider extends ChangeNotifier {
     for (var key in months) {
       _statistics[key] = !_statistics.containsKey(key) ? (1) : (_statistics[key]! + 1);
     }
-    getMostCommonMonth();
   }
 
   void getNearCumples() async {
@@ -181,7 +183,6 @@ class CumpleProvider extends ChangeNotifier {
     return years;
   }
 
-  int countCumples() => _cumplesResp.length;
 
   String getMostCommonMonth() {
     String common = '';
@@ -197,6 +198,7 @@ class CumpleProvider extends ChangeNotifier {
     return common;
   }
 
+// TODO: Revisar, parece que falla
   int getMostCommonDay() {
     int common = 0;
     int aux = 0;

@@ -1,3 +1,4 @@
+import 'package:agenda_cumples/ui/screens/home/widgets/drawer_home.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -18,9 +19,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  final PageController _controller = PageController(
-    initialPage: 0,
-  );
+  final PageController _controller = PageController(initialPage: 0);
 
   @override
   void dispose() {
@@ -39,9 +38,11 @@ class _HomeScreenState extends State<HomeScreen> {
           EstadisticasScreen(tipo: 'pageView'),
         ],
       ),
+      drawer: DrawerHome() ,
     );
   }
 }
+
 
 class _Home extends StatelessWidget {
   const _Home({
@@ -107,7 +108,7 @@ class MenuActions extends StatelessWidget {
           ),
         ),
         GestureDetector(
-          onTap: () =>Navigator.push(context, CustomPageRoute(child: const EstadisticasScreen())),
+          onTap: () => Navigator.push(context, CustomPageRoute(child: const EstadisticasScreen())),
           child: const ActionItem(
             title: 'estadísticas',
             icon: Icons.insert_chart_outlined_outlined,

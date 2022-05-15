@@ -139,6 +139,8 @@ class _CumpleFormState extends State<CumpleForm> {
     );
   }
 
+// TODO al abrir mostrar snackbar aconsejando poner el año de nacimiento
+// TODO cerrar teclado despues de elegir fecha
   _elegirFecha(BuildContext context, TextEditingController cumpleController) async {
     final DateTime? newDate = await showDatePicker(
       context: context,

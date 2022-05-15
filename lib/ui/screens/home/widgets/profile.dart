@@ -52,12 +52,13 @@ class MenuIcon extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    
     return Column(
       children: [
         Container(
           margin: const EdgeInsets.only(top: 30, left: 20),
           child: IconButton(
-            onPressed: () {},
+            onPressed: () => Scaffold.of(context).openDrawer(),
             splashColor: Colors.transparent,
             highlightColor: Colors.transparent,
             hoverColor: Colors.transparent,

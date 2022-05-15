@@ -79,7 +79,7 @@ class _Cumples extends StatelessWidget {
       );
     }
 
-    WidgetsBinding.instance?.addPostFrameCallback((_) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
       Future.delayed(const Duration(milliseconds: 400), (() => _animateToIndex()));
     });
 

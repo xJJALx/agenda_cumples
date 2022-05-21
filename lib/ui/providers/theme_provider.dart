@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:agenda_cumples/ui/theme/themes.dart';
+import 'package:agenda_cumples/ui/themes/themes.dart';
 
 // Todo: Neomorfismo
 class ThemeProvider extends ChangeNotifier {

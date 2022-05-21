@@ -23,7 +23,7 @@ class CumpleProvider extends ChangeNotifier {
   DateTime get today => _today;
   Cumple get cumple => _cumple;
 
-   int countCumples() => _cumplesResp.length;
+  int countCumples() => _cumplesResp.length;
 
   CumpleProvider() {
     getCumples();
@@ -91,7 +91,6 @@ class CumpleProvider extends ChangeNotifier {
     if (_nearCumples.isEmpty) {
       _nearCumples = [..._cumplesResp.where((cumple) => cumple.date.month == _today.month && cumple.date.day >= _today.day)];
     }
-
     // Cumple más cerano
     while (_nearCumples.isEmpty && nextMonth <= 12) {
       _nearCumples = [..._cumplesResp.where((cumple) => cumple.date.month == _today.month + nextMonth)];
@@ -99,7 +98,6 @@ class CumpleProvider extends ChangeNotifier {
     }
 
     notifyListeners();
-
     // var nearCumples = _cumples.map((cumple) {
     //   if (cumple.month == _today.month) return cumple;
     // }).toList();
@@ -127,7 +125,7 @@ class CumpleProvider extends ChangeNotifier {
 
     final int nearMonth = _nearCumples.isEmpty ? _today.month : _nearCumples.first.date.month;
     final int indexCumple = _cumplesResp.indexWhere((cumple) => cumple.date.month == nearMonth);
-
+    
     // Control si no hay cumple cercano
     indexCumple == -1 ? numCumples = 99 : numCumples = indexCumple;
 

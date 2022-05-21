@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import 'package:agenda_cumples/ui/providers/theme_provider.dart';
 
 class ActionItem extends StatelessWidget {
   const ActionItem({
@@ -15,7 +18,9 @@ class ActionItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    final bool isDark = Provider.of<ThemeProvider>(context).isDark;
+
+    final _card = Container(
       margin: const EdgeInsets.all(4),
       width: 110,
       height: 110,
@@ -29,11 +34,17 @@ class ActionItem extends StatelessWidget {
             const SizedBox(height: 5),
             Text(
               title,
-              style: const TextStyle(fontWeight: FontWeight.bold),
+              style: Theme.of(context).textTheme.button?.copyWith(color: colorIcon.withOpacity(0.7)),
             ),
           ],
         ),
       ),
-    );
+    );    
+
+    if (!isDark) {
+      return _card;
+    } else {
+      return Opacity(opacity: 0.7, child: _card,);
+    }
   }
 }

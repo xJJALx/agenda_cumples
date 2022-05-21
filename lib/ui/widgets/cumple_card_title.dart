@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 
-import 'package:google_fonts/google_fonts.dart';
-import 'package:agenda_cumples/ui/widgets/widgets.dart';
 
-import '../../data/models/models.dart';
-import '../utils/month_text.dart';
+import 'package:agenda_cumples/data/models/models.dart';
+import 'package:agenda_cumples/ui/widgets/widgets.dart';
+import 'package:agenda_cumples/ui/utils/month_text.dart';
 
 class CumpleCardTitle extends StatelessWidget {
   const CumpleCardTitle(this.cumple, {Key? key}) : super(key: key);
@@ -33,7 +32,8 @@ class _MonthTitle extends StatelessWidget {
       padding: const EdgeInsets.only(top: 20, left: 40),
       child: Row(
         children: [
-          Text(getMonth(month), style: GoogleFonts.play(fontSize: 20)),
+          Text(getMonth(month), 
+          style: Theme.of(context).textTheme.headline3),
         ],
       ),
     );

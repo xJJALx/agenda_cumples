@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import 'package:agenda_cumples/ui/providers/theme_provider.dart';
 
 class Profile extends StatelessWidget {
   const Profile({Key? key}) : super(key: key);
@@ -27,20 +30,20 @@ class Avatar extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
-      children: const [
-        CircleAvatar(
+      children: [
+        const CircleAvatar(
           radius: 35,
           backgroundImage: AssetImage('assets/WinterMask.jpeg'),
         ),
-        SizedBox(height: 10),
+        const SizedBox(height: 10),
         Text(
           'Jhon Jairo Aristizábal',
-          style: TextStyle(fontSize: 21, fontWeight: FontWeight.bold),
+          style: Theme.of(context).textTheme.headline3,
         ),
-        SizedBox(height: 5),
+        const SizedBox(height: 5),
         Text(
           'Desarrollador web',
-          style: TextStyle(fontSize: 16, color: Colors.black54),
+          style: Theme.of(context).textTheme.subtitle1,
         ),
       ],
     );
@@ -52,7 +55,6 @@ class MenuIcon extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    
     return Column(
       children: [
         Container(
@@ -62,7 +64,7 @@ class MenuIcon extends StatelessWidget {
             splashColor: Colors.transparent,
             highlightColor: Colors.transparent,
             hoverColor: Colors.transparent,
-            icon: const Icon(Icons.notes_sharp, color: Colors.black87),
+            icon: const Icon(Icons.notes_sharp),
           ),
         ),
       ],
@@ -75,7 +77,9 @@ class EditIcon extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
+    final isDark = Provider.of<ThemeProvider>(context).isDark;
+
+    final _editBtn = Column(
       children: [
         Container(
           margin: const EdgeInsets.only(top: 30, right: 20),
@@ -93,5 +97,11 @@ class EditIcon extends StatelessWidget {
         ),
       ],
     );
+
+    if (!isDark) {
+      return _editBtn;
+    } else {
+      return Opacity(opacity: 0.7, child: _editBtn);
+    }
   }
 }

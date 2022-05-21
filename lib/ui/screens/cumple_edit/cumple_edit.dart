@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import 'package:agenda_cumples/ui/providers/theme_provider.dart';
 import 'package:agenda_cumples/ui/providers/cumple_provider.dart';
 import 'package:agenda_cumples/ui/widgets/custom_snackbar.dart';
 import 'package:agenda_cumples/ui/widgets/widgets.dart';
@@ -12,7 +13,7 @@ class CumpleEditScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: Stack(
         children: const [
           Background(),
@@ -30,13 +31,15 @@ class Background extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Provider.of<ThemeProvider>(context).isDark;
     final size = MediaQuery.of(context).size;
 
     return Container(
       height: size.height * 0.35,
-      decoration: const BoxDecoration(
+      decoration: BoxDecoration(
         image: DecorationImage(
-          image: AssetImage("assets/blueGeometricHorizontal.png"),
+          image: const AssetImage("assets/blueGeometricHorizontal.png"),
+          colorFilter: isDark ? ColorFilter.mode(Colors.black.withOpacity(0.5), BlendMode.darken) : null,
           fit: BoxFit.fill,
         ),
       ),
@@ -52,9 +55,9 @@ class BottomModal extends StatelessWidget {
     return DraggableScrollableSheet(
       initialChildSize: 0.72,
       builder: (context, scrollController) => Container(
-        decoration: const BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.vertical(top: Radius.circular(50.0)),
+        decoration: BoxDecoration(
+          color: Theme.of(context).scaffoldBackgroundColor,
+          borderRadius: const BorderRadius.vertical(top: Radius.circular(50.0)),
         ),
         child: const CumpleForm(),
       ),
@@ -159,9 +162,7 @@ class _CumpleFormState extends State<CumpleForm> {
     if (nameController.text.isNotEmpty && cumpleController.text.isNotEmpty) {
       final resp = cumpleProvider.addCumple(nameController.text, selectedDate);
 
-      resp.toString() != '' 
-      ? _showConfirmation('Cumpleaños creado') 
-      : _showError('Ha ocurrido un error');
+      resp.toString() != '' ? _showConfirmation('Cumpleaños creado') : _showError('Ha ocurrido un error');
     } else {
       _showWarning();
     }
@@ -176,10 +177,7 @@ class _CumpleFormState extends State<CumpleForm> {
     if (nameController.text.isNotEmpty && cumpleController.text.isNotEmpty) {
       final resp = await cumpleProvider.updateCumple(nameController.text, DateTime(year, month, day));
 
-      resp == true 
-      ? _showConfirmation('Cumpleaños actualizado') 
-      : _showError('Ha ocurrido un error');
-      
+      resp == true ? _showConfirmation('Cumpleaños actualizado') : _showError('Ha ocurrido un error');
     } else {
       _showWarning();
     }
@@ -231,5 +229,4 @@ class _CumpleFormState extends State<CumpleForm> {
       ));
     }
   }
-
 }

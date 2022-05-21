@@ -18,10 +18,10 @@ class MenuItemTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListTile(
       onTap: onClick,
-      leading: leading,
-      title: Text(text),
-      hoverColor: color.withOpacity(0.5),
       focusColor: color,
+      hoverColor: color.withOpacity(0.5),
+      leading: leading, iconColor: Theme.of(context).iconTheme.color,
+      title: Text(text, style: Theme.of(context).textTheme.labelMedium),
     );
   }
 }

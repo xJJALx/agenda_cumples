@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
-import 'package:google_fonts/google_fonts.dart';
 import 'package:pie_chart/pie_chart.dart';
 
 import 'package:agenda_cumples/ui/widgets/widgets.dart';
@@ -17,7 +15,6 @@ class EstadisticasScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
       body: SizedBox(
         child: Stack(
           children: [
@@ -47,7 +44,7 @@ class _Titulo extends StatelessWidget {
         padding: const EdgeInsets.all(10),
         child: Text(
           'Estadísticas',
-          style: GoogleFonts.play(fontSize: 34),
+          style: Theme.of(context).textTheme.headline2,        
         ),
       ),
     );
@@ -62,9 +59,9 @@ class _BottomModal extends StatelessWidget {
     return DraggableScrollableSheet(
       initialChildSize: 0.32,
       builder: (context, scrollController) => Container(
-        decoration: const BoxDecoration(
-          color: Color(0xFFf4f2fe),
-          borderRadius: BorderRadius.vertical(top: Radius.circular(50.0)),
+        decoration:  BoxDecoration(
+          color: Theme.of(context).colorScheme.secondary,
+          borderRadius: const BorderRadius.vertical(top: Radius.circular(50.0)),
         ),
         child: const _DatosExtra(),
       ),
@@ -87,27 +84,15 @@ class _DatosExtra extends StatelessWidget {
         children: [
           Text(
             'Cumpleaños totales: ${cumpleProvider.countCumples()}',
-            style: GoogleFonts.play(
-              fontSize: 25,
-              color: Colors.black,
-              fontWeight: FontWeight.w500,
-            ),
+            style: Theme.of(context).textTheme.headline3
           ),
           Text(
             'Mes más común: ${cumpleProvider.getMostCommonMonth()}',
-            style: GoogleFonts.play(
-              fontSize: 25,
-              color: Colors.black,
-              fontWeight: FontWeight.w500,
-            ),
+            style: Theme.of(context).textTheme.headline3
           ),
           Text(
             'Día más común: ${cumpleProvider.getMostCommonDay()}',
-            style: GoogleFonts.play(
-              fontSize: 25,
-              color: Colors.black,
-              fontWeight: FontWeight.w500,
-            ),
+            style: Theme.of(context).textTheme.headline3
           ),
         ],
       ),
@@ -137,7 +122,12 @@ class _Grafica extends StatelessWidget {
               // gradientList: colors,
               initialAngleInDegree: 0,
               centerText: "Cumples",
-              legendOptions: const LegendOptions(showLegends: true, legendPosition: LegendPosition.bottom, showLegendsInRow: true),
+              legendOptions: LegendOptions(
+                showLegends: true,
+                legendPosition: LegendPosition.bottom,
+                showLegendsInRow: true,
+                legendTextStyle:  Theme.of(context).textTheme.labelMedium ?? const TextStyle(color: Colors.black54),
+              ),
               chartValuesOptions: const ChartValuesOptions(
                 showChartValueBackground: true,
                 showChartValues: true,

@@ -2,19 +2,19 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:agenda_cumples/ui/providers/theme_provider.dart';
 
 import 'package:agenda_cumples/ui/providers/cumple_provider.dart';
 import 'package:agenda_cumples/ui/screens/screens.dart';
 import 'package:agenda_cumples/ui/routes/routes.dart';
 import 'package:agenda_cumples/ui/widgets/widgets.dart';
 
-
 class CumpleDetailsScreen extends StatelessWidget {
   const CumpleDetailsScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Provider.of<ThemeProvider>(context).isDark;
     String img = randomImg();
 
     return Scaffold(
@@ -22,6 +22,7 @@ class CumpleDetailsScreen extends StatelessWidget {
         decoration: BoxDecoration(
           image: DecorationImage(
             image: AssetImage("assets/$img.png"),
+            colorFilter: isDark ? ColorFilter.mode(Colors.white.withOpacity(0.75), BlendMode.modulate) : null,
             fit: BoxFit.cover,
           ),
         ),
@@ -115,17 +116,17 @@ class _InfoCumple extends StatelessWidget {
         const SizedBox(height: 20),
         Text(
           cumple.name,
-          style: GoogleFonts.play(fontSize: 45, color: Colors.black, fontWeight: FontWeight.w500),
+          style: Theme.of(context).textTheme.headline1,
         ),
         const SizedBox(height: 20),
         Text(
           cumple.date.year.toString(),
-          style: GoogleFonts.play(fontSize: 45, color: Colors.black, fontWeight: FontWeight.w500),
+          style: Theme.of(context).textTheme.headline1,
         ),
         const SizedBox(height: 20),
         Text(
           '${cumpleProvider.getAge()} años',
-          style: GoogleFonts.play(fontSize: 45, color: Colors.black, fontWeight: FontWeight.w500),
+          style: Theme.of(context).textTheme.headline1,
         ),
       ],
     );

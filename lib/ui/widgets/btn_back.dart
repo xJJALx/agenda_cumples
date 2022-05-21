@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import 'package:agenda_cumples/ui/providers/theme_provider.dart';
 
 class BtnBack extends StatelessWidget {
   const BtnBack({Key? key, this.color = Colors.white}) : super(key: key);
@@ -7,13 +10,18 @@ class BtnBack extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Provider.of<ThemeProvider>(context).isDark;
+
     return SafeArea(
       child: Padding(
         padding: const EdgeInsets.all(10),
         child: TextButton(
           onPressed: () => Navigator.pop(context),
           style: ButtonStyle(overlayColor: MaterialStateProperty.all(Colors.transparent)),
-          child: Icon(Icons.arrow_back_outlined, color: color),
+          child: Icon(
+            Icons.arrow_back_outlined,
+            color: isDark ? Theme.of(context).iconTheme.color : color,
+          ),
         ),
       ),
     );

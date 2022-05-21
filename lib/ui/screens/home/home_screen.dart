@@ -30,7 +30,6 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
       body: PageView(
         controller: _controller,
         children: const [
@@ -45,9 +44,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
 
 class _Home extends StatelessWidget {
-  const _Home({
-    Key? key,
-  }) : super(key: key);
+  const _Home({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -127,16 +124,16 @@ class CumplesSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
-      children: const [
+      children:  [
         Expanded(
           child: Card(
             margin: EdgeInsets.zero,
             elevation: 0,
-            color: Color(0xFFf4f2fe),
-            shape: RoundedRectangleBorder(
+            color: Theme.of(context).colorScheme.secondary,
+            shape: const RoundedRectangleBorder(
               borderRadius: BorderRadius.only(topLeft: Radius.circular(35), topRight: Radius.circular(35)),
             ),
-            child: _Cumples(),
+            child: const _Cumples(),
           ),
         ),
       ],
@@ -157,7 +154,7 @@ class _Cumples extends StatelessWidget {
           padding: const EdgeInsets.only(top: 10),
           child: Text(
             'Proximos cumpleaños',
-            style: GoogleFonts.play(fontSize: 22),
+            style: Theme.of(context).textTheme.headline4,
           ),
         ),
         const SizedBox(height: 5),

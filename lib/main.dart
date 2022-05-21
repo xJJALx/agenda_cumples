@@ -1,8 +1,10 @@
-import 'package:agenda_cumples/data/repositories/firebase_cumples_repository.dart';
-import 'package:agenda_cumples/ui/providers/cumple_provider.dart';
 import 'package:flutter/material.dart';
-import 'package:agenda_cumples/ui/routes/routes.dart';
 import 'package:provider/provider.dart';
+
+import 'package:agenda_cumples/ui/providers/theme_provider.dart';
+import 'package:agenda_cumples/data/repositories/firebase_cumples_repository.dart';
+import 'package:agenda_cumples/ui/routes/routes.dart';
+import 'package:agenda_cumples/ui/providers/cumple_provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -19,6 +21,7 @@ class AppState extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => CumpleProvider()),
+        ChangeNotifierProvider(create: (_) => ThemeProvider()),
       ],
       child: const MyApp(),
     );
@@ -33,6 +36,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Agenda cumpleaños',
+      theme: Provider.of<ThemeProvider>(context).getTheme,
       initialRoute: 'home',
       routes: appRoutes,
     );

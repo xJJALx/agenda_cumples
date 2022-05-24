@@ -43,7 +43,7 @@ class CumpleDetailsScreen extends StatelessWidget {
   }
 
   String randomImg() {
-    int max = 5;
+    int max = 6;
     int num = Random().nextInt(max);
     String img;
 
@@ -59,6 +59,9 @@ class CumpleDetailsScreen extends StatelessWidget {
         break;
       case 4:
         img = 'four';
+        break;
+      case 5:
+        img = 'five';
         break;
       default:
         img = 'four';

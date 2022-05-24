@@ -153,7 +153,7 @@ class _Cumples extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.only(top: 10),
           child: Text(
-            'Proximos cumpleaños',
+            'Próximos cumpleaños',
             style: Theme.of(context).textTheme.headline4,
           ),
         ),

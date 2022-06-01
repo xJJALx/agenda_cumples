@@ -9,8 +9,15 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:agenda_cumples/ui/providers/cumple_provider.dart';
 
 // Todo cambiar appbar statico por uno que se oculte
-class CumplesScreen extends StatelessWidget {
+class CumplesScreen extends StatefulWidget {
   const CumplesScreen({Key? key}) : super(key: key);
+
+  @override
+  State<CumplesScreen> createState() => _CumplesScreenState();
+}
+
+class _CumplesScreenState extends State<CumplesScreen> {
+  bool _isSelected = false;
 
   @override
   Widget build(BuildContext context) {
@@ -29,14 +36,25 @@ class CumplesScreen extends StatelessWidget {
                 ],
               ),
             ),
-            _Cumples(),
+            _Cumples(swiperView: _isSelected),
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: const Color(0xFFe5e0fd),
-        onPressed: () => Navigator.push(context, CustomPageRoute(child: const CumpleEditScreen())),
-        child: const Icon(Icons.add, color: Color(0xFFa492f8)),
+      floatingActionButton: Column(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          ChoiceChip(
+            selectedColor: const Color(0xFFe5e0fd),
+              label:  const Padding(padding: EdgeInsets.all(4), child: Icon(Icons.view_carousel_outlined)),
+              selected: _isSelected,
+              onSelected: (value) => setState(() => _isSelected = value)),
+          const SizedBox(height: 10),
+          FloatingActionButton(
+            backgroundColor: const Color(0xFFe5e0fd),
+            onPressed: () => Navigator.push(context, CustomPageRoute(child: const CumpleEditScreen())),
+            child: const Icon(Icons.add, color: Color(0xFFa492f8)),
+          ),
+        ],
       ),
     );
   }
@@ -59,8 +77,9 @@ class _Titulo extends StatelessWidget {
 
 // https://stackoverflow.com/questions/51216448/is-there-any-callback-to-tell-me-when-build-function-is-done-in-flutter
 class _Cumples extends StatelessWidget {
-  _Cumples({Key? key}) : super(key: key);
+  _Cumples({Key? key, required this.swiperView}) : super(key: key);
 
+  final bool swiperView;
   final ScrollController _controller = ScrollController();
 
   @override
@@ -72,44 +91,46 @@ class _Cumples extends StatelessWidget {
     void _animateToIndex() {
       _controller.animateTo(
         _positionScroll,
-        duration: _positionScroll < 2500 
-          ? const Duration(milliseconds: 1850) 
-          :const Duration(milliseconds: 4500),
+        duration: _positionScroll < 2500 ? const Duration(milliseconds: 1850) : const Duration(milliseconds: 4500),
         curve: Curves.easeInOut,
       );
     }
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      Future.delayed(const Duration(milliseconds: 400), (() => _animateToIndex()));
+      if (_controller.hasClients) {
+        Future.delayed(const Duration(milliseconds: 400), (() => _animateToIndex()));
+      }
     });
 
     if (cumples.isNotEmpty) {
-      return Expanded(
-        child: ListView.builder(
-          physics: const BouncingScrollPhysics(),
-          controller: _controller,
-          itemCount: cumples.length,
-          itemBuilder: (_, i) {
-            var cumple = cumples.keys.elementAt(i);
+      if (swiperView) {
+        return Expanded(child: Center(child: CumpleCardSwiper(cumples: cumples)));
+      } else {
+        return Expanded(
+          child: ListView.builder(
+            physics: const BouncingScrollPhysics(),
+            controller: _controller,
+            itemCount: cumples.length,
+            itemBuilder: (_, i) {
+              var cumple = cumples.keys.elementAt(i);
 
-            if (cumples.values.elementAt(i)) {
-              return Center(child: CumpleCardTitle(cumple));
-            } else {
-              return Center(child: CumpleCard(cumple));
-            }
-          },
-        ),
-      );
+              if (cumples.values.elementAt(i)) {
+                return Center(child: CumpleCardTitle(cumple));
+              } else {
+                return Center(child: CumpleCard(cumple));
+              }
+            },
+          ),
+        );
+      }
     } else {
       return const CircularProgressIndicator();
     }
   }
 }
 
-
-
-  // ! Los meses se renderizan bien la primera vez pero si se hace scroll se redibuja
-  // ! y se pierde el titulo del primer cumple del mes
+// ! Los meses se renderizan bien la primera vez pero si se hace scroll se redibuja
+// ! y se pierde el titulo del primer cumple del mes
 // VERSION LISTVIEW
 //   class _Cumples extends StatelessWidget {
 //   _Cumples({Key? key}) : super(key: key);

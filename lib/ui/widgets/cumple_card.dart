@@ -23,6 +23,7 @@ class CumpleCard extends StatelessWidget {
 
     return Container(
       padding: const EdgeInsets.all(20),
+      constraints: const BoxConstraints(minWidth: 350, maxWidth: 500),
       width: size.width * 0.9,
       height: 220,
       child: Hero(

@@ -126,7 +126,7 @@ class _CumpleFormState extends State<CumpleForm> {
                   textStyle: const TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
                 ),
                 onPressed: () => _elegirFecha(context, cumpleController),
-                child: const Text('Elegir una fecha'),
+                child: Text('Elegir fecha', style: Theme.of(context).textTheme.labelMedium),
               ),
               const SizedBox(width: 20),
               ElevatedButton(
@@ -140,7 +140,7 @@ class _CumpleFormState extends State<CumpleForm> {
                   if (cumpleProvider.cumple.id != '') _updateCumple(cumpleProvider);
                   FocusScope.of(context).unfocus();
                 },
-                child: const Text('Guardar'),
+                child: Text('Guardar', style: Theme.of(context).textTheme.labelMedium),
               ),
             ],
           )

@@ -44,8 +44,8 @@ class _CumplesScreenState extends State<CumplesScreen> {
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
           ChoiceChip(
-            selectedColor: const Color(0xFFe5e0fd),
-              label:  const Padding(padding: EdgeInsets.all(4), child: Icon(Icons.view_carousel_outlined)),
+            selectedColor: const Color(0xFFe5e0fd),          
+              label:  const Padding(padding: EdgeInsets.all(4), child: Icon(Icons.view_carousel_outlined, color: Color(0xFFa492f8) ,)),
               selected: _isSelected,
               onSelected: (value) => setState(() => _isSelected = value)),
           const SizedBox(height: 10),
@@ -69,7 +69,7 @@ class _Titulo extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 20),
       child: Text(
         'Cumpleaños',
-        style: GoogleFonts.play(fontSize: 35),
+        style: Theme.of(context).textTheme.headline2,
       ),
     );
   }

@@ -8,9 +8,10 @@ import 'package:agenda_cumples/data/models/models.dart';
 // * Para manejar que cumpleaños es el primero del mes en una lista, creamos un mapa
 // * con el cumple y una propiedad bool
 // TODO Buscador
+// TODO Swiper cumple position actual
 class CumpleProvider extends ChangeNotifier {
   final DateTime _today = DateTime.now();
-  final Map<String, double> _statistics = {};
+  final Map<String, double> _monthStatistics = {};
   Map<Cumple, bool> _cumples = {};
   List<Cumple> _cumplesResp = [];
   List<Cumple> _nearCumples = [];
@@ -18,7 +19,7 @@ class CumpleProvider extends ChangeNotifier {
   late Cumple _cumple;
 
   Map<Cumple, bool> get allCumples => _cumples;
-  Map<String, double> get statistics => _statistics;
+  Map<String, double> get statistics => _monthStatistics;
   List<Cumple> get nearCumples => _nearCumples;
   DateTime get today => _today;
   Cumple get cumple => _cumple;
@@ -41,7 +42,7 @@ class CumpleProvider extends ChangeNotifier {
     sortCumples();
     getNearCumples();
     setMonthTitle();
-    getStatistics();
+    getMonthStatistics();
 
     notifyListeners();
   }
@@ -69,17 +70,17 @@ class CumpleProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void getStatistics() {
+  void getMonthStatistics() {
     List<String> months = [];
-    _statistics.clear();
+    _monthStatistics.clear();
 
     for (var cumple in _cumplesResp) {
       String month = getMonth(cumple.date.month);
       months.add(month);
     }
 
-    for (var key in months) {
-      _statistics[key] = !_statistics.containsKey(key) ? (1) : (_statistics[key]! + 1);
+    for (var month in months) {
+      _monthStatistics[month] = !_monthStatistics.containsKey(month) ? (1) : (_monthStatistics[month]! + 1);
     }
   }
 
@@ -125,7 +126,7 @@ class CumpleProvider extends ChangeNotifier {
 
     final int nearMonth = _nearCumples.isEmpty ? _today.month : _nearCumples.first.date.month;
     final int indexCumple = _cumplesResp.indexWhere((cumple) => cumple.date.month == nearMonth);
-    
+
     // Control si no hay cumple cercano
     indexCumple == -1 ? numCumples = 99 : numCumples = indexCumple;
 
@@ -143,7 +144,6 @@ class CumpleProvider extends ChangeNotifier {
     Cumple newCumple = Cumple(id: cumple.id, name: name, date: dateFormat);
 
     final resp = await repository.updateCumpleFirebase(newCumple);
-
     getCumples();
 
     return resp;
@@ -181,12 +181,11 @@ class CumpleProvider extends ChangeNotifier {
     return years;
   }
 
-
   String getMostCommonMonth() {
     String common = '';
     double aux = 0;
 
-    _statistics.forEach((key, value) {
+    _monthStatistics.forEach((key, value) {
       if (aux < value) {
         common = key;
         aux = value;
@@ -196,14 +195,27 @@ class CumpleProvider extends ChangeNotifier {
     return common;
   }
 
-// TODO: Revisar, parece que falla
   int getMostCommonDay() {
+    final Map<int, int> dayStatistics = {};
+    List<int> days = [];
     int common = 0;
     int aux = 0;
 
     for (var cumple in _cumplesResp) {
-      if (aux < cumple.date.day) common = cumple.date.day;
+      int day = cumple.date.day;
+      days.add(day);
     }
+
+    for (var day in days) {
+      dayStatistics[day] = !dayStatistics.containsKey(day) ? (1) : (dayStatistics[day]! + 1);
+    }
+
+    dayStatistics.forEach((key, value) {
+      if (aux < value) {
+        common = key;
+        aux = value;
+      }
+    });
 
     return common;
   }

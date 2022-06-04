@@ -89,7 +89,7 @@ class _CumpleFormState extends State<CumpleForm> {
 
     // https://github.com/flutter/flutter/issues/23195
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (cumpleProvider.countCumples() < 5 || (cumpleProvider.countCumples() % 7 == 0)) {
+      if ((cumpleProvider.countCumples() < 5 || (cumpleProvider.countCumples() % 7 == 0)) && cumpleProvider.cumple.id.isEmpty) {
         _showTip('No olvides elegir el año de nacimiento ;)');
       }
     });  
@@ -201,9 +201,9 @@ class _CumpleFormState extends State<CumpleForm> {
   _showConfirmation(String message) {
     ScaffoldMessenger.of(context).showSnackBar(
       CustomSnackbar(
-        title: 'Oh!',
         message: message,
-        bgColor: const Color.fromARGB(210, 145, 255, 169),
+        bgColor: const Color.fromARGB(255, 165, 226, 178),
+        textColor: Colors.black,
       ),
     );
   }

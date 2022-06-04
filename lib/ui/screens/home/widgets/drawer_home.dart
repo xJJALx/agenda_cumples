@@ -62,7 +62,6 @@ class DrawerHome extends StatelessWidget {
           const SizedBox(height: 20),
           ListTile(
             leading: Icon(Icons.wb_sunny_outlined, color: Theme.of(context).iconTheme.color),
-            // TODO: persistencia tema elegido
             title: Text('Tema', style: Theme.of(context).textTheme.labelMedium),
             trailing: CupertinoSwitch(
               value: theme.isDark,

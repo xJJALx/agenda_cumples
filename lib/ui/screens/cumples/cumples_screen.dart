@@ -5,7 +5,6 @@ import 'package:agenda_cumples/ui/screens/screens.dart';
 import 'package:agenda_cumples/ui/widgets/widgets.dart';
 
 import 'package:provider/provider.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:agenda_cumples/ui/providers/cumple_provider.dart';
 
 // Todo cambiar appbar statico por uno que se oculte
@@ -51,7 +50,10 @@ class _CumplesScreenState extends State<CumplesScreen> {
           const SizedBox(height: 10),
           FloatingActionButton(
             backgroundColor: const Color(0xFFe5e0fd),
-            onPressed: () => Navigator.push(context, CustomPageRoute(child: const CumpleEditScreen())),
+            onPressed: () {
+              Provider.of<CumpleProvider>(context, listen: false).clearCumple();
+              Navigator.push(context, CustomPageRoute(child: const CumpleEditScreen()));
+            },
             child: const Icon(Icons.add, color: Color(0xFFa492f8)),
           ),
         ],

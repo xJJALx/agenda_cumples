@@ -166,6 +166,7 @@ class CumpleProvider extends ChangeNotifier {
     return resp;
   }
 
+  // Además de resetear el cumpleaños sirve para darle un valor inicial
   void clearCumple() {
     Cumple cumpleAux = Cumple(name: '', date: DateTime(1900, 1, 1));
     cumple = cumpleAux;

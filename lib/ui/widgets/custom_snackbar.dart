@@ -34,9 +34,9 @@ class CustomSnackbar extends SnackBar {
               ),
               Container(
                 margin: img.isNotEmpty ? const EdgeInsets.only(left: 112) : null,
-                height: 100,            
+                height: img.isNotEmpty? 100 : 80,            
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 10),
+                  padding: img.isNotEmpty ? const EdgeInsets.symmetric(vertical: 10) : const EdgeInsets.symmetric(vertical: 0),
                   child: Column(                  
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [

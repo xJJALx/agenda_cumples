@@ -34,7 +34,7 @@ class CumpleCard extends StatelessWidget {
             Navigator.push(context, CustomPageRoute(child: const CumpleDetailsScreen()));
           },
           child: Opacity(
-            opacity:isDark ? 0.70 : 0.95,
+            opacity: 0.95,
             child: Container(
               decoration: BoxDecoration(
                 borderRadius: const BorderRadius.all(Radius.circular(15)),
@@ -46,7 +46,7 @@ class CumpleCard extends StatelessWidget {
                 ),
                 boxShadow: [
                   BoxShadow(
-                    color: gradientColorsTypeOne[cumple.date.month].withOpacity(0.35),
+                    color: gradientColorsTypeOne[cumple.date.month].withOpacity(isDark ? 0.0 : 0.35),
                     spreadRadius: 5,
                     blurRadius: 7,
                     offset: const Offset(0, 3), // changes position of shadow

@@ -106,7 +106,11 @@ class _Cumples extends StatelessWidget {
 
     if (cumples.isNotEmpty) {
       if (swiperView) {
-        return Expanded(child: Center(child: CumpleCardSwiper(cumples: cumples)));
+        return Expanded(
+          child: Center(
+            child: CumpleCardSwiper(cumples: cumples),
+          ),
+        );
       } else {
         return Expanded(
           child: ListView.builder(

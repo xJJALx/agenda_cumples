@@ -3,6 +3,8 @@ import 'package:firebase_core/firebase_core.dart';
 
 import 'package:agenda_cumples/data/models/models.dart';
 
+import '../../firebase_options.dart';
+
 class FirebaseCumplesRepository {
   // ToDo hacer stream
   //  Stream collectionStream = FirebaseFirestore.instance.collection('cumples').snapshots();
@@ -14,12 +16,7 @@ class FirebaseCumplesRepository {
 
   static Future initializeApp() async {
     await Firebase.initializeApp(
-      options: const FirebaseOptions(
-        apiKey: "XXX",
-        appId: "XXX",
-        messagingSenderId: "XXX",
-        projectId: "xagenda-cumplesx",
-      ),
+      options: DefaultFirebaseOptions.currentPlatform
     );
   }
 

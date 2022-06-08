@@ -1,7 +1,10 @@
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
 import 'package:agenda_cumples/data/models/models.dart';
+import 'package:agenda_cumples/ui/providers/cumple_provider.dart';
 import 'package:agenda_cumples/ui/widgets/widgets.dart';
 import 'package:card_swiper/card_swiper.dart';
-import 'package:flutter/material.dart';
 
 class CumpleCardSwiper extends StatelessWidget {
   const CumpleCardSwiper({Key? key, required this.cumples}) : super(key: key);
@@ -18,6 +21,7 @@ class CumpleCardSwiper extends StatelessWidget {
       child: Swiper(
         itemCount: cumples.length,
         itemWidth: size.width * 0.9,
+        index: Provider.of<CumpleProvider>(context).indexCumple, // Nota: si en el provider el index es -1 parece no fallar y directamente toma la ultima posición
         // pagination: const SwiperPagination(),
         // control: const SwiperControl(),
         layout: SwiperLayout.STACK,

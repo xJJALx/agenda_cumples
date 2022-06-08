@@ -17,12 +17,14 @@ class CumpleProvider extends ChangeNotifier {
   List<Cumple> _nearCumples = [];
   FirebaseCumplesRepository repository = FirebaseCumplesRepository();
   late Cumple _cumple;
+  int _indexCumpleInit = 0;
 
   Map<Cumple, bool> get allCumples => _cumples;
   Map<String, double> get statistics => _monthStatistics;
   List<Cumple> get nearCumples => _nearCumples;
   DateTime get today => _today;
   Cumple get cumple => _cumple;
+  int get indexCumple => _indexCumpleInit;
 
   int countCumples() => _cumplesResp.length;
 
@@ -126,9 +128,10 @@ class CumpleProvider extends ChangeNotifier {
 
     final int nearMonth = _nearCumples.isEmpty ? _today.month : _nearCumples.first.date.month;
     final int indexCumple = _cumplesResp.indexWhere((cumple) => cumple.date.month == nearMonth);
+    _indexCumpleInit = indexCumple; // Guardamos la posición del cumple mas cercano a mostrar. Util para el swiper.
 
     // Control si no hay cumple cercano
-    indexCumple == -1 ? numCumples = 99 : numCumples = indexCumple;
+    indexCumple == -1 ? numCumples = _cumplesResp.length : numCumples = indexCumple;
 
     _cumples.forEach((key, value) {
       if (value == true && key.date.month < nearMonth) numTitles++;

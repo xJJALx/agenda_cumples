@@ -89,7 +89,7 @@ class _CumpleFormState extends State<CumpleForm> {
 
     // https://github.com/flutter/flutter/issues/23195
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      if ((cumpleProvider.countCumples() < 5 || (cumpleProvider.countCumples() % 7 == 0)) && cumpleProvider.cumple.id.isEmpty) {
+      if ((cumpleProvider.countCumples() < 5 || (cumpleProvider.countCumples() % 7 == 0)) && cumpleController.text.isEmpty ) {
         _showTip('No olvides elegir el año de nacimiento ;)');
       }
     });  
@@ -100,6 +100,7 @@ class _CumpleFormState extends State<CumpleForm> {
           Container(
             margin: const EdgeInsets.symmetric(vertical: 25, horizontal: 80),
             child: TextFormField(
+              style: Theme.of(context).textTheme.labelMedium?.copyWith(fontSize: 16),
               controller: nameController,
               decoration: InputDecorations.inputCumple(hintText: 'Miku...', labelText: 'Nombre'),
             ),
@@ -109,6 +110,7 @@ class _CumpleFormState extends State<CumpleForm> {
             child: TextFormField(
               controller: cumpleController,
               enabled: false,
+              style: Theme.of(context).textTheme.labelMedium?.copyWith(fontSize: 16),
               decoration: InputDecorations.inputCumple(
                 hintText: '18/02/2014',
                 labelText: 'Cumpleaños',

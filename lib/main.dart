@@ -37,7 +37,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Agenda cumpleaños',
       theme: Provider.of<ThemeProvider>(context).getTheme,
-      initialRoute: 'home',
+      initialRoute: 'auth',
       routes: appRoutes,
     );
   }

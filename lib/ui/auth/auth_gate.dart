@@ -13,9 +13,21 @@ class AuthGate extends StatelessWidget {
       initialData: FirebaseAuth.instance.currentUser,
       builder: (context, snapshot) {
         if (!snapshot.hasData) {
-          return const SignInScreen(providerConfigs: [
-             EmailProviderConfiguration(),
-          ]);
+          return SignInScreen(
+            subtitleBuilder: (context, action) {
+              return Padding(
+                padding: const EdgeInsets.only(bottom: 8),
+                child: Text(
+                  action == AuthAction.signIn 
+                  ? 'Bienvenido, inicia sesión para continuar.' 
+                  : 'Bienvenido, registrate para crear una cuenta.',
+                ),
+              );
+            },
+            providerConfigs: const [
+              EmailProviderConfiguration(),
+            ],
+          );
         }
 
         return const HomeScreen();

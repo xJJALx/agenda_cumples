@@ -1,7 +1,11 @@
-import 'package:agenda_cumples/ui/screens/home/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutterfire_ui/auth.dart';
+import 'package:provider/provider.dart';
+
+import 'package:agenda_cumples/ui/providers/user_provider.dart';
+import 'package:agenda_cumples/ui/screens/home/home_screen.dart';
+import 'package:agenda_cumples/data/models/models.dart' as cumple_user;
 
 class AuthGate extends StatelessWidget {
   const AuthGate({Key? key}) : super(key: key);
@@ -26,10 +30,17 @@ class AuthGate extends StatelessWidget {
             },
             providerConfigs: const [
               EmailProviderConfiguration(),
-              GoogleProviderConfiguration(clientId: "666245894893-1tnui02f2uoiaus92bqh8pdm5c0ql2mo.apps.googleusercontent.com")
+              GoogleProviderConfiguration(clientId: "666245894893-1tnui02f2uoiaus92bqh8pdm5c0ql2mo.apps.googleusercontent.com"),
             ],
           );
         }
+
+        cumple_user.User userData = cumple_user.User(
+          uid: snapshot.data!.uid,
+          displayName: snapshot.data!.displayName ?? 'Anónimo', 
+          email: snapshot.data!.email ?? 'email');
+
+        Provider.of<UserProvider>(context).initUser(userData);
 
         return const HomeScreen();
       },

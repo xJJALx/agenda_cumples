@@ -1,4 +1,3 @@
-import 'package:agenda_cumples/ui/screens/home/widgets/drawer_home.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -6,6 +5,7 @@ import 'package:agenda_cumples/ui/providers/cumple_provider.dart';
 import 'package:agenda_cumples/ui/routes/routes.dart';
 import 'package:agenda_cumples/ui/screens/screens.dart';
 
+import 'package:agenda_cumples/ui/screens/home/widgets/drawer_home.dart';
 import 'package:agenda_cumples/ui/screens/home/widgets/action_item.dart';
 import 'package:agenda_cumples/ui/screens/home/widgets/profile.dart';
 import 'package:agenda_cumples/ui/widgets/cumple_card.dart';
@@ -36,11 +36,10 @@ class _HomeScreenState extends State<HomeScreen> {
           EstadisticasScreen(tipo: 'pageView'),
         ],
       ),
-      drawer: DrawerHome() ,
+      drawer: DrawerHome(),
     );
   }
 }
-
 
 class _Home extends StatelessWidget {
   const _Home({Key? key}) : super(key: key);
@@ -123,7 +122,7 @@ class CumplesSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
-      children:  [
+      children: [
         Expanded(
           child: Card(
             margin: EdgeInsets.zero,

@@ -1,4 +1,5 @@
 import 'package:agenda_cumples/data/repositories/firebase_cumples_repository.dart';
+import 'package:agenda_cumples/ui/providers/user_provider.dart';
 import 'package:agenda_cumples/ui/utils/month_text.dart';
 import 'package:flutter/cupertino.dart';
 
@@ -38,7 +39,7 @@ class CumpleProvider extends ChangeNotifier {
 
   getCumples() async {
     // await Future.delayed(const Duration(milliseconds: 500), () => _cumplesResp = cumplesData);
-    _cumplesResp = await repository.getCumplesFirebase();
+    _cumplesResp = await repository.getCumplesFirebase(UserProvider.usuario.uid);
 
     sortCumples();
     getNearCumples();
@@ -144,8 +145,9 @@ class CumpleProvider extends ChangeNotifier {
   Future<bool> updateCumple(String name, DateTime date) async {
     final DateTime dateFormat = DateTime(date.year, date.month, date.day, 12);
     Cumple newCumple = Cumple(id: cumple.id, name: name, date: dateFormat);
+    _cumple = newCumple;
 
-    final resp = await repository.updateCumpleFirebase(newCumple);
+    final resp = await repository.updateCumpleFirebase(newCumple, UserProvider.usuario.uid);
     getCumples();
 
     return resp;
@@ -156,7 +158,7 @@ class CumpleProvider extends ChangeNotifier {
     Cumple cumple = Cumple(name: name, date: dateFormat);
     String resp = '';
 
-    await repository.addCumpleFirebase(cumple).then((id) {
+    await repository.addCumpleFirebase(cumple, UserProvider.usuario.uid).then((id) {
       _cumple = cumple;
       _cumple.id = id;
       _cumples.putIfAbsent(cumple, () => false);

@@ -181,7 +181,7 @@ class CumpleProvider extends ChangeNotifier {
     int years = _today.year - _cumple.date.year;
     int months = _today.month - _cumple.date.month;
 
-    if (months < 0 && years > 0 || (months == 0 && _today.day < _today.day)) years--;
+    if (months < 0 && years > 0 || (months == 0 && _today.day < cumple.date.day)) years--;
 
     return years;
   }

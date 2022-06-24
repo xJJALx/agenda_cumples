@@ -151,8 +151,12 @@ class _CumpleFormState extends State<CumpleForm> {
     );
   }
 
+
   _elegirFecha(BuildContext context, TextEditingController cumpleController) async {
-    final List<String> date = cumpleController.text.split('/');
+    final List<String> date = cumpleController.text.isEmpty 
+                              ? ['18','02','2014'] 
+                              : cumpleController.text.split('/');
+
     final int day = int.parse(date[0]);
     final int month = int.parse(date[1]);
     final int year = int.parse(date[2]);

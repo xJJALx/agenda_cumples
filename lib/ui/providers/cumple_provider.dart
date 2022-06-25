@@ -1,4 +1,5 @@
 import 'package:agenda_cumples/data/repositories/firebase_cumples_repository.dart';
+import 'package:agenda_cumples/ui/providers/user_provider.dart';
 import 'package:agenda_cumples/ui/utils/month_text.dart';
 import 'package:flutter/cupertino.dart';
 
@@ -8,7 +9,6 @@ import 'package:agenda_cumples/data/models/models.dart';
 // * Para manejar que cumpleaños es el primero del mes en una lista, creamos un mapa
 // * con el cumple y una propiedad bool
 // TODO Buscador
-// TODO Swiper cumple position actual
 class CumpleProvider extends ChangeNotifier {
   final DateTime _today = DateTime.now();
   final Map<String, double> _monthStatistics = {};
@@ -17,12 +17,14 @@ class CumpleProvider extends ChangeNotifier {
   List<Cumple> _nearCumples = [];
   FirebaseCumplesRepository repository = FirebaseCumplesRepository();
   late Cumple _cumple;
+  int _indexCumpleInit = 0;
 
   Map<Cumple, bool> get allCumples => _cumples;
   Map<String, double> get statistics => _monthStatistics;
   List<Cumple> get nearCumples => _nearCumples;
   DateTime get today => _today;
   Cumple get cumple => _cumple;
+  int get indexCumple => _indexCumpleInit;
 
   int countCumples() => _cumplesResp.length;
 
@@ -37,7 +39,7 @@ class CumpleProvider extends ChangeNotifier {
 
   getCumples() async {
     // await Future.delayed(const Duration(milliseconds: 500), () => _cumplesResp = cumplesData);
-    _cumplesResp = await repository.getCumplesFirebase();
+    _cumplesResp = await repository.getCumplesFirebase(UserProvider.usuario.uid);
 
     sortCumples();
     getNearCumples();
@@ -126,9 +128,10 @@ class CumpleProvider extends ChangeNotifier {
 
     final int nearMonth = _nearCumples.isEmpty ? _today.month : _nearCumples.first.date.month;
     final int indexCumple = _cumplesResp.indexWhere((cumple) => cumple.date.month == nearMonth);
+    _indexCumpleInit = indexCumple; // Guardamos la posición del cumple mas cercano a mostrar. Util para el swiper.
 
     // Control si no hay cumple cercano
-    indexCumple == -1 ? numCumples = 99 : numCumples = indexCumple;
+    indexCumple == -1 ? numCumples = _cumplesResp.length : numCumples = indexCumple;
 
     _cumples.forEach((key, value) {
       if (value == true && key.date.month < nearMonth) numTitles++;
@@ -142,8 +145,9 @@ class CumpleProvider extends ChangeNotifier {
   Future<bool> updateCumple(String name, DateTime date) async {
     final DateTime dateFormat = DateTime(date.year, date.month, date.day, 12);
     Cumple newCumple = Cumple(id: cumple.id, name: name, date: dateFormat);
+    _cumple = newCumple;
 
-    final resp = await repository.updateCumpleFirebase(newCumple);
+    final resp = await repository.updateCumpleFirebase(newCumple, UserProvider.usuario.uid);
     getCumples();
 
     return resp;
@@ -154,7 +158,7 @@ class CumpleProvider extends ChangeNotifier {
     Cumple cumple = Cumple(name: name, date: dateFormat);
     String resp = '';
 
-    await repository.addCumpleFirebase(cumple).then((id) {
+    await repository.addCumpleFirebase(cumple, UserProvider.usuario.uid).then((id) {
       _cumple = cumple;
       _cumple.id = id;
       _cumples.putIfAbsent(cumple, () => false);
@@ -177,7 +181,7 @@ class CumpleProvider extends ChangeNotifier {
     int years = _today.year - _cumple.date.year;
     int months = _today.month - _cumple.date.month;
 
-    if (months < 0 && years > 0 || (months == 0 && _today.day < _today.day)) years--;
+    if (months < 0 && years > 0 || (months == 0 && _today.day < cumple.date.day)) years--;
 
     return years;
   }

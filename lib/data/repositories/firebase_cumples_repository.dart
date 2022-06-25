@@ -9,21 +9,30 @@ class FirebaseCumplesRepository {
   // ToDo hacer stream
   //  Stream collectionStream = FirebaseFirestore.instance.collection('cumples').snapshots();
 
-  final cumplesRef = FirebaseFirestore.instance.collection('cumples').withConverter<Cumple>(
+  final cumplesRef = FirebaseFirestore.instance.collection('users').withConverter<Cumple>(
         fromFirestore: (snapshot, _) => Cumple.fromJson(snapshot.data()!),
         toFirestore: (cumple, _) => cumple.toJson(),
       );
 
   static Future initializeApp() async {
-    await Firebase.initializeApp(
-      options: DefaultFirebaseOptions.currentPlatform
-    );
+    await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   }
 
-  Future<List<Cumple>> getCumplesFirebase() async {
+  Future<List<Cumple>> getCumplesFirebase( String userId) async {
     List<Cumple> cumples = [];
 
-    List<QueryDocumentSnapshot<Cumple>> cumplesResp = await cumplesRef.get().then((snapshot) => snapshot.docs);
+    List<QueryDocumentSnapshot<Cumple>> cumplesResp = 
+    await cumplesRef
+          .doc(userId)
+          .collection('cumples')
+          .withConverter<Cumple>(
+            fromFirestore: (snapshot, _) => Cumple.fromJson(snapshot.data()!),
+            toFirestore: (cumple, _) => cumple.toJson(),
+          ).get()
+          .then((snapshot)  => snapshot.docs);
+      
+    // Sin subCollection 
+    // List<QueryDocumentSnapshot<Cumple>> cumplesResp = await cumplesRef.doc(userId).collection('cumples').get().then((snapshot) => snapshot.docs);
 
     if (cumplesResp.isNotEmpty) {
       for (var cumple in cumplesResp) {
@@ -35,16 +44,26 @@ class FirebaseCumplesRepository {
     return cumples;
   }
 
-  Future<String> addCumpleFirebase(Cumple newCumple) async {
-    final resp = await cumplesRef.add(newCumple);
+  Future<String> addCumpleFirebase(Cumple newCumple, String userId) async {
+    final resp = await cumplesRef
+                        .doc(userId)
+                        .collection('cumples')
+                        .add(newCumple.toJson());
+
     return resp.id;
   }
 
-  Future<bool> updateCumpleFirebase(Cumple cumple) async {
+  Future<bool> updateCumpleFirebase(Cumple cumple, String userId) async {
     bool resp = false;
     Map<String, dynamic> newCumple = {'nombre': cumple.name, 'cumple': cumple.date};
 
-    await FirebaseFirestore.instance.collection('cumples').doc(cumple.id).update(newCumple).then((value) => resp = true).catchError((error) => resp = false);
+    await cumplesRef
+          .doc(userId)
+          .collection('cumples')
+          .doc(cumple.id)
+          .update(newCumple)
+          .then((value) => resp = true)
+          .catchError((error) => resp = false);
 
     return resp;
   }

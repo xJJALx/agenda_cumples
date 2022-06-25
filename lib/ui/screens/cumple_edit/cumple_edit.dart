@@ -89,10 +89,10 @@ class _CumpleFormState extends State<CumpleForm> {
 
     // https://github.com/flutter/flutter/issues/23195
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      if ((cumpleProvider.countCumples() < 5 || (cumpleProvider.countCumples() % 7 == 0)) && cumpleProvider.cumple.id.isEmpty) {
+      if ((cumpleProvider.countCumples() < 5 || (cumpleProvider.countCumples() % 7 == 0)) && cumpleController.text.isEmpty) {
         _showTip('No olvides elegir el año de nacimiento ;)');
       }
-    });  
+    });
 
     return Form(
       child: Column(
@@ -100,6 +100,7 @@ class _CumpleFormState extends State<CumpleForm> {
           Container(
             margin: const EdgeInsets.symmetric(vertical: 25, horizontal: 80),
             child: TextFormField(
+              style: Theme.of(context).textTheme.labelMedium?.copyWith(fontSize: 16),
               controller: nameController,
               decoration: InputDecorations.inputCumple(hintText: 'Miku...', labelText: 'Nombre'),
             ),
@@ -109,6 +110,7 @@ class _CumpleFormState extends State<CumpleForm> {
             child: TextFormField(
               controller: cumpleController,
               enabled: false,
+              style: Theme.of(context).textTheme.labelMedium?.copyWith(fontSize: 16),
               decoration: InputDecorations.inputCumple(
                 hintText: '18/02/2014',
                 labelText: 'Cumpleaños',
@@ -149,10 +151,19 @@ class _CumpleFormState extends State<CumpleForm> {
     );
   }
 
+
   _elegirFecha(BuildContext context, TextEditingController cumpleController) async {
+    final List<String> date = cumpleController.text.isEmpty 
+                              ? ['18','02','2014'] 
+                              : cumpleController.text.split('/');
+
+    final int day = int.parse(date[0]);
+    final int month = int.parse(date[1]);
+    final int year = int.parse(date[2]);
+
     final DateTime? newDate = await showDatePicker(
       context: context,
-      initialDate: DateTime.now(),
+      initialDate: DateTime(year, month, day),
       firstDate: DateTime(1900),
       lastDate: DateTime.now().add(const Duration(days: 365)),
     );
@@ -180,7 +191,7 @@ class _CumpleFormState extends State<CumpleForm> {
 
     if (nameController.text.isNotEmpty && cumpleController.text.isNotEmpty) {
       final resp = await cumpleProvider.updateCumple(nameController.text, DateTime(year, month, day));
-      resp == true ? _showConfirmation('Cumpleaños actualizado') : _showError('Ha ocurrido un error');    
+      resp == true ? _showConfirmation('Cumpleaños actualizado') : _showError('Ha ocurrido un error');
     } else {
       _showWarning();
     }
@@ -192,7 +203,7 @@ class _CumpleFormState extends State<CumpleForm> {
       (() => ScaffoldMessenger.of(context).showSnackBar(
             CustomSnackbar(
               message: message,
-              bgColor:  const Color.fromARGB(255, 106, 145, 230),
+              bgColor: const Color.fromARGB(255, 106, 145, 230),
             ),
           )),
     );

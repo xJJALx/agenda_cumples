@@ -35,15 +35,12 @@ class AuthGate extends StatelessWidget {
           );
         }
 
-        cumple_user.User userData = cumple_user.User(
-          uid: snapshot.data!.uid,
-          displayName: snapshot.data!.displayName ?? 'Anónimo', 
-          email: snapshot.data!.email ?? 'email');
-
-        Provider.of<UserProvider>(context).initUser(userData);
+        Provider.of<UserProvider>(context,listen: false).setUid(snapshot.data!.uid);
 
         return const HomeScreen();
       },
     );
+
+
   }
 }

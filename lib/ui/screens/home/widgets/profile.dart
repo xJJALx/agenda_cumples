@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'package:agenda_cumples/ui/providers/theme_provider.dart';
+import 'package:agenda_cumples/ui/providers/providers.dart';
 
 class Profile extends StatelessWidget {
   const Profile({Key? key}) : super(key: key);
@@ -37,12 +37,12 @@ class Avatar extends StatelessWidget {
         ),
         const SizedBox(height: 10),
         Text(
-          'Jhon Jairo Aristizábal',
+          Provider.of<UserProvider>(context).displayName,
           style: Theme.of(context).textTheme.headline3,
         ),
         const SizedBox(height: 5),
         Text(
-          'Desarrollador web',
+          Provider.of<UserProvider>(context).ocupacion,
           style: Theme.of(context).textTheme.subtitle1,
         ),
       ],
@@ -87,7 +87,7 @@ class EditIcon extends StatelessWidget {
             color: const Color(0xFFe5e0fd),
             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50)),
             child: IconButton(
-              onPressed: () {},
+              onPressed: () => controlUser(context),
               splashColor: Colors.transparent,
               highlightColor: Colors.transparent,
               hoverColor: Colors.transparent,
@@ -103,5 +103,10 @@ class EditIcon extends StatelessWidget {
     } else {
       return Opacity(opacity: 0.7, child: _editBtn);
     }
+  }
+
+  controlUser(BuildContext context) {
+    final userProvider = Provider.of<UserProvider>(context, listen: false);
+    UserProvider.usuario.docId.isEmpty ? userProvider.addInfoUser() : userProvider.updateInfoUser();
   }
 }

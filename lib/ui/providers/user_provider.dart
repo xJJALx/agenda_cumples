@@ -5,10 +5,17 @@ import 'package:flutter/cupertino.dart';
 class UserProvider extends ChangeNotifier {
   static User usuario = User(displayName: '');
   final FirebaseCumplesRepository _repository = FirebaseCumplesRepository();
+  bool _isEditMode = false;
   String _uid = '';
 
   get displayName => usuario.displayName;
   get ocupacion => usuario.ocupacion;
+  get isEditMode => _isEditMode;
+
+  set setEditMode(bool value) {
+    _isEditMode = value;
+    notifyListeners();
+  }
 
   void setUid(String id) {
     _uid = id;

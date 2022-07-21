@@ -100,8 +100,8 @@ class _CumpleFormState extends State<CumpleForm> {
           Container(
             margin: const EdgeInsets.symmetric(vertical: 25, horizontal: 80),
             child: TextFormField(
-              style: Theme.of(context).textTheme.labelMedium?.copyWith(fontSize: 16),
               controller: nameController,
+              style: Theme.of(context).textTheme.labelMedium?.copyWith(fontSize: 16),
               decoration: InputDecorations.inputCumple(hintText: 'Miku...', labelText: 'Nombre'),
             ),
           ),

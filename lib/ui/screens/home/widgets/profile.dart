@@ -38,36 +38,43 @@ class Avatar extends StatelessWidget {
           radius: 35,
           backgroundImage: AssetImage('assets/WinterMask.jpeg'),
         ),
-        _editMode 
-        ? const _UserEditData() 
-        : const _UserData()
+        _editMode ? _UserEditData() : const _UserData()
       ],
     );
   }
 }
 
 class _UserEditData extends StatelessWidget {
-  const _UserEditData({Key? key}) : super(key: key);
+  _UserEditData({Key? key}) : super(key: key);
+
+  final TextEditingController nameController = TextEditingController();
+  final TextEditingController ocupacionController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
+    nameController.text = UserProvider.usuario.displayName;
+    ocupacionController.text = UserProvider.usuario.ocupacion;
+
     return Form(
       child: Column(
         children: [
           SizedBox(
-            width: 200,
+            width: 180,
             child: TextFormField(
+              controller: nameController,
+              autofocus: true,
               textAlign: TextAlign.center,
-              decoration: const InputDecoration(
-                labelText: 'Enter your username',
-              ),
+              style: Theme.of(context).textTheme.labelMedium?.copyWith(fontSize: 16),
+              onChanged: (text) => UserProvider.usuario.displayName = text,
             ),
           ),
           SizedBox(
-            width: 200,
+            width: 180,
             child: TextFormField(
+              controller: ocupacionController,
               textAlign: TextAlign.center,
-              decoration: const InputDecoration(labelText: 'Enter your username'),
+              style: Theme.of(context).textTheme.labelMedium?.copyWith(fontSize: 16),
+              onChanged: (text) => UserProvider.usuario.ocupacion = text,
             ),
           ),
         ],
@@ -81,16 +88,18 @@ class _UserData extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final user = Provider.of<UserProvider>(context);
+
     return Column(
       children: [
         const SizedBox(height: 10),
         Text(
-          Provider.of<UserProvider>(context).displayName,
+          user.displayName.isEmpty ? 'Miku': user.displayName,
           style: Theme.of(context).textTheme.headline3,
         ),
         const SizedBox(height: 5),
         Text(
-          Provider.of<UserProvider>(context).ocupacion,
+          user.ocupacion.isEmpty ? 'Sobrecualificad@' : user.ocupacion,
           style: Theme.of(context).textTheme.subtitle1,
         ),
       ],
@@ -156,12 +165,15 @@ class EditIcon extends StatelessWidget {
     }
   }
 
+  // TODO: controlar transacciones BBDD innecesarias, comparando textController con valor del usuario. Al estar en widgets diferentes se podria buscar una forma de pasar el textconroller
   onEditMode(BuildContext context) {
     final userProvider = Provider.of<UserProvider>(context, listen: false);
 
     bool isEditMode = userProvider.isEditMode;
     userProvider.setEditMode = !isEditMode;
 
-    UserProvider.usuario.docId.isEmpty ? userProvider.addInfoUser() : userProvider.updateInfoUser();
+    if (isEditMode) {
+      UserProvider.usuario.docId.isEmpty ? userProvider.addInfoUser() : userProvider.updateInfoUser();
+    }
   }
 }

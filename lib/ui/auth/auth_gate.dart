@@ -5,7 +5,6 @@ import 'package:provider/provider.dart';
 
 import 'package:agenda_cumples/ui/providers/user_provider.dart';
 import 'package:agenda_cumples/ui/screens/home/home_screen.dart';
-import 'package:agenda_cumples/data/models/models.dart' as cumple_user;
 
 class AuthGate extends StatelessWidget {
   const AuthGate({Key? key}) : super(key: key);

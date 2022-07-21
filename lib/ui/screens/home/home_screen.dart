@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'package:agenda_cumples/ui/providers/cumple_provider.dart';
+import 'package:agenda_cumples/ui/providers/providers.dart';
 import 'package:agenda_cumples/ui/routes/routes.dart';
 import 'package:agenda_cumples/ui/screens/screens.dart';
 

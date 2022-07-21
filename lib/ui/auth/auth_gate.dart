@@ -5,7 +5,6 @@ import 'package:provider/provider.dart';
 
 import 'package:agenda_cumples/ui/providers/user_provider.dart';
 import 'package:agenda_cumples/ui/screens/home/home_screen.dart';
-import 'package:agenda_cumples/data/models/models.dart' as cumple_user;
 
 class AuthGate extends StatelessWidget {
   const AuthGate({Key? key}) : super(key: key);
@@ -35,15 +34,12 @@ class AuthGate extends StatelessWidget {
           );
         }
 
-        cumple_user.User userData = cumple_user.User(
-          uid: snapshot.data!.uid,
-          displayName: snapshot.data!.displayName ?? 'Anónimo', 
-          email: snapshot.data!.email ?? 'email');
-
-        Provider.of<UserProvider>(context).initUser(userData);
+        Provider.of<UserProvider>(context,listen: false).setUid(snapshot.data!.uid);
 
         return const HomeScreen();
       },
     );
+
+
   }
 }

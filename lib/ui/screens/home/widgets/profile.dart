@@ -3,7 +3,7 @@ import 'package:provider/provider.dart';
 
 import 'package:agenda_cumples/ui/providers/providers.dart';
 
-// TODO animacion del avatar al cambiar a modo edit
+
 class Profile extends StatelessWidget {
   const Profile({Key? key}) : super(key: key);
 
@@ -34,9 +34,15 @@ class Avatar extends StatelessWidget {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        const CircleAvatar(
-          radius: 35,
-          backgroundImage: AssetImage('assets/WinterMask.jpeg'),
+         AnimatedContainer(
+           width: _editMode ? 50 : 70,
+           height: _editMode ? 50 : 70,
+           curve: Curves.easeOutBack,
+          duration: const Duration(milliseconds: 900),
+          child: const CircleAvatar(
+            radius: 35,
+            backgroundImage: AssetImage('assets/WinterMask.jpeg'),
+          ),
         ),
         _editMode ? _UserEditData() : const _UserData()
       ],

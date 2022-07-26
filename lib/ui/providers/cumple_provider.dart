@@ -12,12 +12,13 @@ import 'package:agenda_cumples/data/models/models.dart';
 class CumpleProvider extends ChangeNotifier {
   final DateTime _today = DateTime.now();
   final Map<String, double> _monthStatistics = {};
+  late Cumple _cumple;
   Map<Cumple, bool> _cumples = {};
   List<Cumple> _cumplesResp = [];
   List<Cumple> _nearCumples = [];
   FirebaseCumplesRepository repository = FirebaseCumplesRepository();
-  late Cumple _cumple;
   int _indexCumpleInit = 0;
+  bool _isSelectedSwiper = false;
 
   Map<Cumple, bool> get allCumples => _cumples;
   Map<String, double> get statistics => _monthStatistics;
@@ -25,6 +26,7 @@ class CumpleProvider extends ChangeNotifier {
   DateTime get today => _today;
   Cumple get cumple => _cumple;
   int get indexCumple => _indexCumpleInit;
+  bool get isSelectedSwiper => _isSelectedSwiper;
 
   int countCumples() => _cumplesResp.length;
 
@@ -34,6 +36,11 @@ class CumpleProvider extends ChangeNotifier {
 
   set cumple(Cumple value) {
     _cumple = value;
+    notifyListeners();
+  }
+
+  set isSelectedSwiper(bool value) {
+    _isSelectedSwiper = value;
     notifyListeners();
   }
 

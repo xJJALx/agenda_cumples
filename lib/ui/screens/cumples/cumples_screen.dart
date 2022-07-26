@@ -7,19 +7,14 @@ import 'package:agenda_cumples/ui/widgets/widgets.dart';
 import 'package:provider/provider.dart';
 import 'package:agenda_cumples/ui/providers/cumple_provider.dart';
 
-// Todo cambiar appbar statico por uno que se oculte
-class CumplesScreen extends StatefulWidget {
+
+class CumplesScreen extends StatelessWidget {
   const CumplesScreen({Key? key}) : super(key: key);
 
   @override
-  State<CumplesScreen> createState() => _CumplesScreenState();
-}
-
-class _CumplesScreenState extends State<CumplesScreen> {
-  bool _isSelected = false;
-
-  @override
   Widget build(BuildContext context) {
+    bool _isSelected = Provider.of<CumpleProvider>(context).isSelectedSwiper;
+
     return Scaffold(
       body: SizedBox(
         width: double.infinity,
@@ -43,10 +38,15 @@ class _CumplesScreenState extends State<CumplesScreen> {
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
           ChoiceChip(
-            selectedColor: const Color(0xFFe5e0fd),          
-              label:  const Padding(padding: EdgeInsets.all(4), child: Icon(Icons.view_carousel_outlined, color: Color(0xFFa492f8) ,)),
+              selectedColor: const Color(0xFFe5e0fd),
+              label: const Padding(
+                  padding: EdgeInsets.all(4),
+                  child: Icon(
+                    Icons.view_carousel_outlined,
+                    color: Color(0xFFa492f8),
+                  )),
               selected: _isSelected,
-              onSelected: (value) => setState(() => _isSelected = value)),
+              onSelected: (value) => Provider.of<CumpleProvider>(context, listen: false).isSelectedSwiper = value),
           const SizedBox(height: 10),
           FloatingActionButton(
             backgroundColor: const Color(0xFFe5e0fd),
@@ -93,14 +93,14 @@ class _Cumples extends StatelessWidget {
     void _animateToIndex() {
       _controller.animateTo(
         _positionScroll,
-        duration: _positionScroll < 2500 ? const Duration(milliseconds: 1850) : const Duration(milliseconds: 4500),
+        duration: _positionScroll < 2500 ? const Duration(milliseconds: 1550) : const Duration(milliseconds: 4500),
         curve: Curves.easeInOut,
       );
     }
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (_controller.hasClients) {
-        Future.delayed(const Duration(milliseconds: 400), (() => _animateToIndex()));
+      if (_controller.hasClients && _positionScroll > 400) {
+        Future.delayed(const Duration(milliseconds: 100), (() => _animateToIndex()));
       }
     });
 

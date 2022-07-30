@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'package:agenda_cumples/ui/providers/theme_provider.dart';
+import 'package:agenda_cumples/ui/providers/providers.dart';
 
 class BtnBack extends StatelessWidget {
   const BtnBack({Key? key, this.color = Colors.white}) : super(key: key);
@@ -16,7 +16,10 @@ class BtnBack extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.all(10),
         child: TextButton(
-          onPressed: () => Navigator.pop(context),
+           onPressed: () {
+             Provider.of<CumpleProvider>(context,listen: false).isSelectedSwiper = false;
+             Navigator.pop(context);
+           },
           style: ButtonStyle(overlayColor: MaterialStateProperty.all(Colors.transparent)),
           child: Icon(
             Icons.arrow_back_outlined,

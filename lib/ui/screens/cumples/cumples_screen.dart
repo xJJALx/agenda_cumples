@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
+
+import 'package:agenda_cumples/ui/providers/providers.dart';
 import 'package:agenda_cumples/ui/routes/routes.dart';
 import 'package:agenda_cumples/ui/screens/screens.dart';
 import 'package:agenda_cumples/ui/widgets/widgets.dart';
-
-import 'package:provider/provider.dart';
-import 'package:agenda_cumples/ui/providers/cumple_provider.dart';
+import 'package:agenda_cumples/data/models/models.dart';
 
 
 class CumplesScreen extends StatelessWidget {
@@ -118,7 +119,7 @@ class _Cumples extends StatelessWidget {
             controller: _controller,
             itemCount: cumples.length,
             itemBuilder: (_, i) {
-              var cumple = cumples.keys.elementAt(i);
+              Cumple cumple = cumples.keys.elementAt(i);
 
               if (cumples.values.elementAt(i)) {
                 return Center(child: CumpleCardTitle(cumple));

@@ -16,6 +16,7 @@ class CumpleProvider extends ChangeNotifier {
   Map<Cumple, bool> _cumples = {};
   List<Cumple> _cumplesResp = [];
   List<Cumple> _nearCumples = [];
+  List<Cumple> _searchCumples = [];
   FirebaseCumplesRepository repository = FirebaseCumplesRepository();
   int _indexCumpleInit = 0;
   bool _isSelectedSwiper = false;
@@ -23,6 +24,7 @@ class CumpleProvider extends ChangeNotifier {
   Map<Cumple, bool> get allCumples => _cumples;
   Map<String, double> get statistics => _monthStatistics;
   List<Cumple> get nearCumples => _nearCumples;
+  List<Cumple> get searchCumples => _searchCumples;
   DateTime get today => _today;
   Cumple get cumple => _cumple;
   int get indexCumple => _indexCumpleInit;
@@ -113,6 +115,17 @@ class CumpleProvider extends ChangeNotifier {
     // }).toList();
   }
 
+  void searchCumple(String query) {
+    if (query.isEmpty) {
+      _searchCumples = [];
+    } else {
+      _searchCumples = [..._cumplesResp.where((cumple) => cumple.name.contains(query))];
+
+      if (_searchCumples.isEmpty) _searchCumples = [Cumple(name: 'No hay coincidencias', date: DateTime.now())];
+    }
+    notifyListeners();
+  }
+
   double scrollActualCumple() {
     double pixels = 0;
     double numTitles = (_today.month - 1) * 60; // 60 height aprox title of month
@@ -181,6 +194,11 @@ class CumpleProvider extends ChangeNotifier {
   void clearCumple() {
     Cumple cumpleAux = Cumple(name: '', date: DateTime(1900, 1, 1));
     cumple = cumpleAux;
+    notifyListeners();
+  }
+
+  void clearSearchCumple() {
+    _searchCumples = [];
     notifyListeners();
   }
 

@@ -48,10 +48,10 @@ class _Items extends StatelessWidget {
         //   decoration: BoxDecoration(color: Colors.blue),
         //   child: Text('Drawer Header'),
         // ),
-        const SizedBox(height: 20),
+        const SizedBox(height: 50),
         _Buscador(),
 
-        const SizedBox(height: 20),
+        const SizedBox(height: 35),
         MenuItemTile(
           leading: const Icon(Icons.add_circle),
           text: 'Nuevo cumple',
@@ -171,7 +171,7 @@ class _Sugerencias extends StatelessWidget {
 
     return Column(
       children: [
-        const SizedBox(height: 90),
+        const SizedBox(height: 120),
         Expanded(
           child: Container(
             padding: const EdgeInsets.only(left: 10),

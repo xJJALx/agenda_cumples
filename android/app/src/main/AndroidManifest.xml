@@ -2,7 +2,7 @@
     package="com.jhonaristiloz.agenda_cumples">
 <uses-permission android:name="android.permission.INTERNET"/>
    <application
-        android:label="agenda_cumples"
+        android:label="Agenda Cumples"
         android:name="${applicationName}"
         android:icon="@mipmap/launcher_icon">
         <activity

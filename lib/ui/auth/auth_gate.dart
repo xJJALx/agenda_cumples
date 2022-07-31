@@ -18,13 +18,24 @@ class AuthGate extends StatelessWidget {
         if (!snapshot.hasData) {
           return SignInScreen(
             subtitleBuilder: (context, action) {
-              return Padding(
-                padding: const EdgeInsets.only(bottom: 8),
-                child: Text(
-                  action == AuthAction.signIn 
-                  ? 'Bienvenido, inicia sesión para continuar.' 
-                  : 'Bienvenido, registrate para crear una cuenta.',
-                ),
+              return Column(
+                children: [
+                  Container(
+                    padding: const EdgeInsets.all(20),
+                    width: 220,
+                    height: 220,
+                    child: Image.asset("assets/icon/icon.png"),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(bottom:50),
+                    child: Text(
+                      action == AuthAction.signIn 
+                      ? 'Bienvenido, inicia sesión para continuar.' 
+                      : 'Bienvenido, registrate para crear una cuenta.',
+                      style: const TextStyle(fontSize: 20,),
+                    ),
+                  ),
+                ],
               );
             },
             providerConfigs: const [

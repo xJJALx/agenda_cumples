@@ -10,6 +10,7 @@ import 'package:agenda_cumples/ui/providers/cumple_provider.dart';
 import 'package:agenda_cumples/ui/utils/gradient_colors.dart';
 import 'package:agenda_cumples/ui/utils/month_text.dart';
 
+// CORREGIR LINEA AMARILLA CON MATERIAL Fix yellow underline https://github.com/flutter/flutter/issues/30647#issuecomment-509712719
 class CumpleCard extends StatelessWidget {
   const CumpleCard(this.cumple, {Key? key}) : super(key: key);
 
@@ -59,17 +60,23 @@ class CumpleCard extends StatelessWidget {
                   Positioned(
                     right: 30,
                     top: 20,
-                    child: Text(
-                      cumple.name,
-                      style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 35, color: Colors.white70),
+                    child: Material(
+                      type: MaterialType.transparency, // Fix yellow underline Hero animation
+                      child: Text(
+                        cumple.name,
+                        style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 35, color: Colors.white70),
+                      ),
                     ),
                   ),
                   Positioned(
                     left: 42,
                     bottom: 5,
-                    child: Text(
-                      cumple.date.day.toString().padLeft(2, '0'),
-                      style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 120, color: Colors.white70),
+                    child: Material(
+                      type: MaterialType.transparency, // Fix yellow underline Hero animation
+                      child: Text(
+                        cumple.date.day.toString().padLeft(2, '0'),
+                        style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 120, color: Colors.white70),
+                      ),
                     ),
                   ),
                   Positioned(

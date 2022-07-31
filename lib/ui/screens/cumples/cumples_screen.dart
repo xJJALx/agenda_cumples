@@ -100,7 +100,7 @@ class _Cumples extends StatelessWidget {
     }
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (_controller.hasClients && _positionScroll > 400) {
+      if (_controller.hasClients && _positionScroll > 600) {
         Future.delayed(const Duration(milliseconds: 100), (() => _animateToIndex()));
       }
     });

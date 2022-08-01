@@ -21,6 +21,14 @@ class _HomeScreenState extends State<HomeScreen> {
   final PageController _controller = PageController(initialPage: 0);
 
   @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      Provider.of<CumpleProvider>(context, listen: false).getCumples();
+    });
+  }
+
+  @override
   void dispose() {
     _controller.dispose();
     super.dispose();

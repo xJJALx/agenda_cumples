@@ -107,13 +107,16 @@ class _CumpleFormState extends State<CumpleForm> {
           ),
           Container(
             margin: const EdgeInsets.symmetric(vertical: 25, horizontal: 80),
-            child: TextFormField(
-              controller: cumpleController,
-              enabled: false,
-              style: Theme.of(context).textTheme.labelMedium?.copyWith(fontSize: 16),
-              decoration: InputDecorations.inputCumple(
-                hintText: '18/02/2014',
-                labelText: 'Cumpleaños',
+            child: GestureDetector(
+              onTap: () => _elegirFecha(context, cumpleController),
+              child: TextFormField(
+                controller: cumpleController,
+                enabled: false,
+                style: Theme.of(context).textTheme.labelMedium?.copyWith(fontSize: 16),
+                decoration: InputDecorations.inputCumple(
+                  hintText: '18/02/2014',
+                  labelText: 'Cumpleaños',
+                ),
               ),
             ),
           ),
@@ -138,7 +141,14 @@ class _CumpleFormState extends State<CumpleForm> {
                   textStyle: const TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
                 ),
                 onPressed: () {
-                  if (cumpleProvider.cumple.id == '') _addCumple(cumpleProvider);
+                  if (cumpleProvider.cumple.id == '') {
+                    _addCumple(cumpleProvider);
+                    Provider.of<CumpleProvider>(context, listen: false).cumple = cumple;
+                    Future.delayed(const Duration(milliseconds: 800), (() {
+                      Navigator.pop(context);
+                      Navigator.pushNamed(context, 'cumple-details');
+                    }));
+                  }
                   if (cumpleProvider.cumple.id != '') _updateCumple(cumpleProvider);
                   FocusScope.of(context).unfocus();
                 },
@@ -151,11 +161,10 @@ class _CumpleFormState extends State<CumpleForm> {
     );
   }
 
-
   _elegirFecha(BuildContext context, TextEditingController cumpleController) async {
     final List<String> date = cumpleController.text.isEmpty 
-                              ? ['18','02','2014'] 
-                              : cumpleController.text.split('/');
+                                ? ['18', '02', '2014'] 
+                                : cumpleController.text.split('/');
 
     final int day = int.parse(date[0]);
     final int month = int.parse(date[1]);

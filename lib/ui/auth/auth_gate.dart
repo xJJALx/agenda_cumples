@@ -3,7 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutterfire_ui/auth.dart';
 import 'package:provider/provider.dart';
 
-import 'package:agenda_cumples/ui/providers/user_provider.dart';
+import 'package:agenda_cumples/ui/providers/providers.dart';
 import 'package:agenda_cumples/ui/screens/home/home_screen.dart';
 
 class AuthGate extends StatelessWidget {
@@ -32,7 +32,7 @@ class AuthGate extends StatelessWidget {
                       action == AuthAction.signIn 
                       ? 'Bienvenido, inicia sesión para continuar.' 
                       : 'Bienvenido, registrate para crear una cuenta.',
-                      style: const TextStyle(fontSize: 20,),
+                      style: Theme.of(context).textTheme.headline4,
                     ),
                   ),
                 ],

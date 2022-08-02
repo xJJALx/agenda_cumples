@@ -1,4 +1,4 @@
-package com.example.agenda_cumples
+package com.jhonaristiloz.agenda_cumples
 
 import io.flutter.embedding.android.FlutterActivity
 

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import 'package:animate_do/animate_do.dart';
 import 'package:agenda_cumples/ui/providers/providers.dart';
 
 
@@ -34,14 +35,18 @@ class Avatar extends StatelessWidget {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-         AnimatedContainer(
-           width: _editMode ? 50 : 70,
-           height: _editMode ? 50 : 70,
-           curve: Curves.easeOutBack,
+        AnimatedContainer(
+          width: _editMode ? 50 : 70,
+          height: _editMode ? 50 : 70,
+          curve: Curves.easeOutBack,
           duration: const Duration(milliseconds: 900),
-          child: const CircleAvatar(
-            radius: 35,
-            backgroundImage: AssetImage('assets/WinterMask.jpeg'),
+          child: FadeInDown(
+            duration: const Duration(milliseconds: 1350),
+            delay: const Duration(milliseconds: 600),
+            child: const CircleAvatar(
+              radius: 35,
+              backgroundImage: AssetImage('assets/WinterMask.jpeg'),
+            ),
           ),
         ),
         _editMode ? _UserEditData() : const _UserData()
@@ -96,19 +101,23 @@ class _UserData extends StatelessWidget {
   Widget build(BuildContext context) {
     final user = Provider.of<UserProvider>(context);
 
-    return Column(
-      children: [
-        const SizedBox(height: 10),
-        Text(
-          user.displayName.isEmpty ? 'Miku': user.displayName,
-          style: Theme.of(context).textTheme.headline3,
-        ),
-        const SizedBox(height: 5),
-        Text(
-          user.ocupacion.isEmpty ? 'Sobrecualificad@' : user.ocupacion,
-          style: Theme.of(context).textTheme.subtitle1,
-        ),
-      ],
+    return FadeIn(
+      duration: const Duration(milliseconds: 2200),
+      delay: const Duration(milliseconds: 1200),
+      child: Column(
+        children: [
+          const SizedBox(height: 10),
+          Text(
+            user.displayName.isEmpty ? 'Miku': user.displayName,
+            style: Theme.of(context).textTheme.headline3,
+          ),
+          const SizedBox(height: 5),
+          Text(
+            user.ocupacion.isEmpty ? 'Sobrecualificad@' : user.ocupacion,
+            style: Theme.of(context).textTheme.subtitle1,
+          ),
+        ],
+      ),
     );
   }
 }

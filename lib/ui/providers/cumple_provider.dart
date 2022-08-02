@@ -8,7 +8,7 @@ import 'package:agenda_cumples/data/models/models.dart';
 
 // * Para manejar que cumpleaños es el primero del mes en una lista, creamos un mapa
 // * con el cumple y una propiedad bool
-// TODO Buscador
+
 class CumpleProvider extends ChangeNotifier {
   final DateTime _today = DateTime.now();
   final Map<String, double> _monthStatistics = {};
@@ -119,7 +119,7 @@ class CumpleProvider extends ChangeNotifier {
     if (query.isEmpty) {
       _searchCumples = [];
     } else {
-      _searchCumples = [..._cumplesResp.where((cumple) => cumple.name.contains(query))];
+      _searchCumples = [..._cumplesResp.where((cumple) => cumple.name.toLowerCase().contains(query.toLowerCase()))];
 
       if (_searchCumples.isEmpty) _searchCumples = [Cumple(name: 'No hay coincidencias', date: DateTime.now())];
     }

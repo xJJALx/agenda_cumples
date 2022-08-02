@@ -20,6 +20,7 @@ class FirebaseCumplesRepository {
   }
 
   Future<List<Cumple>> getCumplesFirebase(String userId) async {
+    debugPrint('FIREBASE GETCUmple $userId');
     List<Cumple> cumples = [];
     List<QueryDocumentSnapshot<Cumple>> cumplesResp = await userRef
         .doc(userId)
@@ -67,7 +68,7 @@ class FirebaseCumplesRepository {
 
 
   Future<User> getInfoUser(String userId) async {
-    debugPrint('FIREBASE 1 $userId');
+    debugPrint('FIREBASE LOAD USER $userId');
     User userInfo = User(displayName: '');
 
     List<QueryDocumentSnapshot<User>> infoUserResp = await userRef

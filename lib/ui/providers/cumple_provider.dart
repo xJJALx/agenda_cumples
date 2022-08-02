@@ -8,7 +8,7 @@ import 'package:agenda_cumples/data/models/models.dart';
 
 // * Para manejar que cumpleaños es el primero del mes en una lista, creamos un mapa
 // * con el cumple y una propiedad bool
-// TODO Buscador
+
 class CumpleProvider extends ChangeNotifier {
   final DateTime _today = DateTime.now();
   final Map<String, double> _monthStatistics = {};

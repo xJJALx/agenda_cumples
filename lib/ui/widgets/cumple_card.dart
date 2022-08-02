@@ -79,12 +79,15 @@ class CumpleCard extends StatelessWidget {
                       ),
                     ),
                   ),
-                  Positioned(
-                    left: 52,
-                    bottom: 10,
-                    child: Text(
-                      getMonth(cumple.date.month),
-                      style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: Colors.white70),
+                  Material(
+                    type: MaterialType.transparency, // Fix yellow underline Hero animation
+                    child: Positioned(
+                      left: 52,
+                      bottom: 10,
+                      child: Text(
+                        getMonth(cumple.date.month),
+                        style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: Colors.white70),
+                      ),
                     ),
                   ),
                 ],

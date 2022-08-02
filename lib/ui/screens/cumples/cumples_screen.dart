@@ -94,7 +94,7 @@ class _Cumples extends StatelessWidget {
     void _animateToIndex() {
       _controller.animateTo(
         _positionScroll,
-        duration: _positionScroll < 2500 ? const Duration(milliseconds: 1550) : const Duration(milliseconds: 4500),
+        duration: _positionScroll < 2500 ? const Duration(milliseconds: 1250) : const Duration(milliseconds: 2250),
         curve: Curves.easeInOut,
       );
     }

@@ -119,7 +119,7 @@ class CumpleProvider extends ChangeNotifier {
     if (query.isEmpty) {
       _searchCumples = [];
     } else {
-      _searchCumples = [..._cumplesResp.where((cumple) => cumple.name.contains(query))];
+      _searchCumples = [..._cumplesResp.where((cumple) => cumple.name.toLowerCase().contains(query.toLowerCase()))];
 
       if (_searchCumples.isEmpty) _searchCumples = [Cumple(name: 'No hay coincidencias', date: DateTime.now())];
     }

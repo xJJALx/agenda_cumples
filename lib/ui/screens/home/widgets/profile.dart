@@ -41,8 +41,8 @@ class Avatar extends StatelessWidget {
           curve: Curves.easeOutBack,
           duration: const Duration(milliseconds: 900),
           child: FadeInDown(
-            duration: const Duration(milliseconds: 1350),
-            delay: const Duration(milliseconds: 600),
+            duration: const Duration(milliseconds: 850),
+            delay: const Duration(milliseconds: 350),
             child: const CircleAvatar(
               radius: 35,
               backgroundImage: AssetImage('assets/WinterMask.jpeg'),
@@ -102,8 +102,8 @@ class _UserData extends StatelessWidget {
     final user = Provider.of<UserProvider>(context);
 
     return FadeIn(
-      duration: const Duration(milliseconds: 2200),
-      delay: const Duration(milliseconds: 1200),
+      duration: const Duration(milliseconds: 1650),
+      delay: const Duration(milliseconds: 700),
       child: Column(
         children: [
           const SizedBox(height: 10),

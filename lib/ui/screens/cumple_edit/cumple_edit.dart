@@ -142,12 +142,9 @@ class _CumpleFormState extends State<CumpleForm> {
                 ),
                 onPressed: () {
                   if (cumpleProvider.cumple.id == '') {
-                    _addCumple(cumpleProvider);
+                    _addCumple(context, cumpleProvider);
+
                     Provider.of<CumpleProvider>(context, listen: false).cumple = cumple;
-                    Future.delayed(const Duration(milliseconds: 800), (() {
-                      Navigator.pop(context);
-                      Navigator.pushNamed(context, 'cumple-details');
-                    }));
                   }
                   if (cumpleProvider.cumple.id != '') _updateCumple(cumpleProvider);
                   FocusScope.of(context).unfocus();
@@ -183,10 +180,20 @@ class _CumpleFormState extends State<CumpleForm> {
     }
   }
 
-  _addCumple(CumpleProvider cumpleProvider) {
+  _addCumple(BuildContext context, CumpleProvider cumpleProvider) {
     if (nameController.text.isNotEmpty && cumpleController.text.isNotEmpty) {
       final resp = cumpleProvider.addCumple(nameController.text, selectedDate);
-      resp.toString() != '' ? _showConfirmation('Cumpleaños creado') : _showError('Ha ocurrido un error');
+
+      if (resp.toString() != '') {
+        _showConfirmation('Cumpleaños creado');
+
+        Future.delayed(const Duration(milliseconds: 800), (() {
+          Navigator.pop(context);
+          Navigator.pushNamed(context, 'cumple-details');
+        }));
+      } else {
+        _showError('Ha ocurrido un error');
+      }
     } else {
       _showWarning();
     }

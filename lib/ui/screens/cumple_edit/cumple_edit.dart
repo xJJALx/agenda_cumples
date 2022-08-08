@@ -81,6 +81,7 @@ class _CumpleFormState extends State<CumpleForm> {
   Widget build(BuildContext context) {
     final cumpleProvider = Provider.of<CumpleProvider>(context, listen: false);
     final cumple = cumpleProvider.cumple;
+    bool _isEnabled = nameController.text.isNotEmpty || cumpleController.text.isNotEmpty;
 
     if (cumple.name.isNotEmpty) {
       nameController.text = cumple.name;
@@ -89,7 +90,7 @@ class _CumpleFormState extends State<CumpleForm> {
 
     // https://github.com/flutter/flutter/issues/23195
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      if ((cumpleProvider.countCumples() < 5 || (cumpleProvider.countCumples() % 7 == 0)) && cumpleController.text.isEmpty) {
+      if ((cumpleProvider.countCumples() < 5 || (cumpleProvider.countCumples() % 7 == 0)) && cumpleController.text.isEmpty && !_isEnabled) {
         _showTip('No olvides elegir el año de nacimiento ;)');
       }
     });
@@ -101,6 +102,7 @@ class _CumpleFormState extends State<CumpleForm> {
             margin: const EdgeInsets.symmetric(vertical: 25, horizontal: 80),
             child: TextFormField(
               controller: nameController,
+              onChanged: (text) => setState(() => _isEnabled = true),
               style: Theme.of(context).textTheme.labelMedium?.copyWith(fontSize: 16),
               decoration: InputDecorations.inputCumple(hintText: 'Miku...', labelText: 'Nombre'),
             ),
@@ -108,7 +110,10 @@ class _CumpleFormState extends State<CumpleForm> {
           Container(
             margin: const EdgeInsets.symmetric(vertical: 25, horizontal: 80),
             child: GestureDetector(
-              onTap: () => _elegirFecha(context, cumpleController),
+              onTap: () async {
+               await _elegirFecha(context, cumpleController);
+                if (cumpleController.text.isNotEmpty) setState(() => _isEnabled = true);
+              },
               child: TextFormField(
                 controller: cumpleController,
                 enabled: false,
@@ -120,6 +125,7 @@ class _CumpleFormState extends State<CumpleForm> {
               ),
             ),
           ),
+
           const SizedBox(height: 50),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -130,26 +136,51 @@ class _CumpleFormState extends State<CumpleForm> {
                   padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 20),
                   textStyle: const TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
                 ),
-                onPressed: () => _elegirFecha(context, cumpleController),
-                child: Text('ELEGIR FECHA', style: Theme.of(context).textTheme.labelMedium?.copyWith(color: Colors.white)),
+                onPressed: () async {
+                  await _elegirFecha(context, cumpleController);
+                  if (cumpleController.text.isNotEmpty) setState(() => _isEnabled = true);
+                },
+                child: Text(
+                  'ELEGIR FECHA',
+                  style: Theme.of(context).textTheme.labelMedium?.copyWith(color: Colors.white),
+                ),
               ),
+
               const SizedBox(width: 20),
+               //https://stackoverflow.com/questions/67045317/disable-evaluated-button-animation-on-tap-click
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                  primary: const Color.fromARGB(255, 106, 145, 230),
                   padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 20),
-                  textStyle: const TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
+                  primary: _isEnabled 
+                            ? const Color.fromARGB(255, 106, 145, 230) 
+                            : const Color.fromARGB(255, 221, 221, 224),
+                ).copyWith(
+                  overlayColor: MaterialStateProperty.resolveWith(
+                    (states) => _isEnabled ? null:  Colors.transparent,
+                  ),
+                  elevation: MaterialStateProperty.resolveWith(
+                    (states) => _isEnabled ? 3 : 0,
+                  ),
                 ),
                 onPressed: () {
-                  if (cumpleProvider.cumple.id == '') {
-                    _addCumple(context, cumpleProvider);
+                  if (nameController.text.isEmpty && cumpleController.text.isEmpty) {
+                    null;
+                  } else {
+                    if (cumpleProvider.cumple.id == '') {
+                      _addCumple(context, cumpleProvider);
+                      Provider.of<CumpleProvider>(context, listen: false).cumple = cumple;
+                    }
 
-                    Provider.of<CumpleProvider>(context, listen: false).cumple = cumple;
+                    if (cumpleProvider.cumple.id != '') _updateCumple(cumpleProvider);
+                    FocusScope.of(context).unfocus();
                   }
-                  if (cumpleProvider.cumple.id != '') _updateCumple(cumpleProvider);
-                  FocusScope.of(context).unfocus();
                 },
-                child: Text('GUARDAR', style: Theme.of(context).textTheme.labelMedium?.copyWith(color: Colors.white)),
+                child: Text(
+                  'GUARDAR',
+                  style: _isEnabled 
+                          ? Theme.of(context).textTheme.labelMedium?.copyWith(color: Colors.white) 
+                          : Theme.of(context).textTheme.labelMedium?.copyWith(color: Colors.grey[500]),
+                ),
               ),
             ],
           )
@@ -160,8 +191,8 @@ class _CumpleFormState extends State<CumpleForm> {
 
   _elegirFecha(BuildContext context, TextEditingController cumpleController) async {
     final List<String> date = cumpleController.text.isEmpty 
-                                ? ['18', '02', '2014'] 
-                                : cumpleController.text.split('/');
+                              ? ['18', '02', '2014'] 
+                              : cumpleController.text.split('/');
 
     final int day = int.parse(date[0]);
     final int month = int.parse(date[1]);

@@ -32,7 +32,7 @@ class AuthGate extends StatelessWidget {
                       action == AuthAction.signIn 
                       ? 'Bienvenido, inicia sesión para continuar.' 
                       : 'Bienvenido, registrate para crear una cuenta.',
-                      style: Theme.of(context).textTheme.headline4,
+                      style: Theme.of(context).textTheme.headlineSmall,
                     ),
                   ),
                 ],

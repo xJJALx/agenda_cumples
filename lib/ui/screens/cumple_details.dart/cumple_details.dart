@@ -122,18 +122,18 @@ class _InfoCumple extends StatelessWidget {
           FittedBox(
             child: Text(
               cumple.name,
-              style: Theme.of(context).textTheme.headline1,
+              style: Theme.of(context).textTheme.displayMedium,
             ),
           ),
           const SizedBox(height: 20),
           Text(
             cumple.date.year.toString(),
-            style: Theme.of(context).textTheme.headline1,
+            style: Theme.of(context).textTheme.displayMedium,
           ),
           const SizedBox(height: 20),
           Text(
             '${cumpleProvider.getAge()} años',
-            style: Theme.of(context).textTheme.headline1,
+            style: Theme.of(context).textTheme.displayMedium,
           ),
         ],
       ),

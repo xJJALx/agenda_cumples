@@ -44,7 +44,7 @@ class _Titulo extends StatelessWidget {
         padding: const EdgeInsets.all(10),
         child: Text(
           'Estadísticas',
-          style: Theme.of(context).textTheme.headline2,        
+          style: Theme.of(context).textTheme.headlineLarge,        
         ),
       ),
     );
@@ -84,15 +84,15 @@ class _DatosExtra extends StatelessWidget {
         children: [
           Text(
             'Cumpleaños totales: ${cumpleProvider.countCumples()}',
-            style: Theme.of(context).textTheme.headline3
+            style: Theme.of(context).textTheme.headlineMedium
           ),
           Text(
             'Mes más común: ${cumpleProvider.getMostCommonMonth()}',
-            style: Theme.of(context).textTheme.headline3
+            style: Theme.of(context).textTheme.headlineMedium
           ),
           Text(
             'Día más común: ${cumpleProvider.getMostCommonDay()}',
-            style: Theme.of(context).textTheme.headline3
+            style: Theme.of(context).textTheme.headlineMedium
           ),
         ],
       ),

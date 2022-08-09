@@ -72,7 +72,7 @@ class _Titulo extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 20),
       child: Text(
         'Cumpleaños',
-        style: Theme.of(context).textTheme.headline2,
+        style: Theme.of(context).textTheme.headlineLarge,
       ),
     );
   }

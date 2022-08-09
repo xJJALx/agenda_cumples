@@ -109,12 +109,12 @@ class _UserData extends StatelessWidget {
           const SizedBox(height: 10),
           Text(
             user.displayName.isEmpty ? 'Miku': user.displayName,
-            style: Theme.of(context).textTheme.headline3,
+            style: Theme.of(context).textTheme.headlineMedium,
           ),
           const SizedBox(height: 5),
           Text(
             user.ocupacion.isEmpty ? 'Sobrecualificad@' : user.ocupacion,
-            style: Theme.of(context).textTheme.subtitle1,
+            style: Theme.of(context).textTheme.titleMedium,
           ),
         ],
       ),

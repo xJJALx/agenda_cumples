@@ -113,25 +113,30 @@ class _InfoCumple extends StatelessWidget {
     final cumpleProvider = Provider.of<CumpleProvider>(context);
     final cumple = cumpleProvider.cumple;
 
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        const SizedBox(height: 20),
-        Text(
-          cumple.name,
-          style: Theme.of(context).textTheme.headline1,
-        ),
-        const SizedBox(height: 20),
-        Text(
-          cumple.date.year.toString(),
-          style: Theme.of(context).textTheme.headline1,
-        ),
-        const SizedBox(height: 20),
-        Text(
-          '${cumpleProvider.getAge()} años',
-          style: Theme.of(context).textTheme.headline1,
-        ),
-      ],
+    return Padding(
+      padding: const EdgeInsets.all(20),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          const SizedBox(height: 20),
+          FittedBox(
+            child: Text(
+              cumple.name,
+              style: Theme.of(context).textTheme.displayMedium,
+            ),
+          ),
+          const SizedBox(height: 20),
+          Text(
+            cumple.date.year.toString(),
+            style: Theme.of(context).textTheme.displayMedium,
+          ),
+          const SizedBox(height: 20),
+          Text(
+            '${cumpleProvider.getAge()} años',
+            style: Theme.of(context).textTheme.displayMedium,
+          ),
+        ],
+      ),
     );
   }
 }

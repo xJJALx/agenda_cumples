@@ -34,7 +34,7 @@ class ActionItem extends StatelessWidget {
             const SizedBox(height: 5),
             Text(
               title,
-              style: Theme.of(context).textTheme.button?.copyWith(color: colorIcon.withOpacity(0.7)),
+              style: Theme.of(context).textTheme.labelMedium?.copyWith(color: colorIcon.withOpacity(0.7)),
             ),
           ],
         ),

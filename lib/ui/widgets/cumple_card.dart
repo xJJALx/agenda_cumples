@@ -64,18 +64,22 @@ class CumpleCard extends StatelessWidget {
                       type: MaterialType.transparency, // Fix yellow underline Hero animation
                       child: Text(
                         cumple.name,
-                        style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 35, color: Colors.white70),
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: cumple.name.length < 15 ? 32 : 24 ,
+                          color: Colors.white70,
+                        ),
                       ),
                     ),
                   ),
                   Positioned(
                     left: 42,
-                    bottom: 5,
+                    bottom: 12,
                     child: Material(
                       type: MaterialType.transparency, // Fix yellow underline Hero animation
                       child: Text(
                         cumple.date.day.toString().padLeft(2, '0'),
-                        style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 120, color: Colors.white70),
+                        style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 110, color: Colors.white70),
                       ),
                     ),
                   ),

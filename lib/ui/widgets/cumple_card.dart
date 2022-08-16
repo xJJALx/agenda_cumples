@@ -12,9 +12,10 @@ import 'package:agenda_cumples/ui/utils/month_text.dart';
 
 // CORREGIR LINEA AMARILLA CON MATERIAL Fix yellow underline https://github.com/flutter/flutter/issues/30647#issuecomment-509712719
 class CumpleCard extends StatelessWidget {
-  const CumpleCard(this.cumple, {Key? key}) : super(key: key);
+  const CumpleCard(this.cumple, {Key? key, this.shadow = true}) : super(key: key);
 
   final Cumple cumple;
+  final bool shadow;
 
   @override
   Widget build(BuildContext context) {
@@ -47,7 +48,7 @@ class CumpleCard extends StatelessWidget {
                 ),
                 boxShadow: [
                   BoxShadow(
-                    color: gradientColorsTypeOne[cumple.date.month].withOpacity(isDark ? 0.0 : 0.35),
+                    color: gradientColorsTypeOne[cumple.date.month].withOpacity(isDark || !shadow ? 0.0 : 0.35),
                     spreadRadius: 5,
                     blurRadius: 7,
                     offset: const Offset(0, 3), // changes position of shadow
@@ -66,7 +67,7 @@ class CumpleCard extends StatelessWidget {
                         cumple.name,
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
-                          fontSize: cumple.name.length < 15 ? 32 : 24 ,
+                          fontSize: cumple.name.length < 15 ? 32 : 24,
                           color: Colors.white70,
                         ),
                       ),

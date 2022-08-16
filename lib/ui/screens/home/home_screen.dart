@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:animate_do/animate_do.dart';
 
 import 'package:agenda_cumples/ui/providers/providers.dart';
 import 'package:agenda_cumples/ui/routes/routes.dart';
@@ -179,7 +180,10 @@ class _Cumples extends StatelessWidget {
               physics: const BouncingScrollPhysics(),
               itemCount: cumples.length,
               itemBuilder: (_, i) => Center(
-                child: CumpleCard(cumples[i]),
+                child: FadeInUp(
+                  duration: const Duration(milliseconds: 1350),
+                  child: CumpleCard(cumples[i]),
+                ),
               ),
             ),
           ),

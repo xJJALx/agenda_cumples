@@ -110,4 +110,21 @@ class FirebaseCumplesRepository {
 
     return resp;
   }
+
+
+  Future<bool> deleteCumpleFirebase(String userId, String cumpleId) async {
+    bool resp = false;
+
+    await userRef
+          .doc(userId)
+          .collection('cumples')
+          .doc(cumpleId)
+          .delete()
+          .then((value) => resp = true)
+          .catchError((error) => resp = false);
+
+    return resp;
+  }
 }
+  
+

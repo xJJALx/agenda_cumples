@@ -190,6 +190,12 @@ class CumpleProvider extends ChangeNotifier {
     return resp;
   }
 
+  Future<bool> deleteCumple(String cumpleId) async{
+    final resp = await repository.deleteCumpleFirebase(UserProvider.usuario.uid, cumpleId );
+
+    return resp;
+  }
+
   // Además de resetear el cumpleaños sirve para darle un valor inicial
   void clearCumple() {
     Cumple cumpleAux = Cumple(name: '', date: DateTime(1900, 1, 1));

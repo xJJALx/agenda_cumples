@@ -81,11 +81,13 @@ class _CumpleFormState extends State<CumpleForm> {
   Widget build(BuildContext context) {
     final cumpleProvider = Provider.of<CumpleProvider>(context, listen: false);
     final cumple = cumpleProvider.cumple;
-    bool _isEnabled = nameController.text.isNotEmpty || cumpleController.text.isNotEmpty;
+    bool _isEnabled = nameController.text.isNotEmpty;
+
 
     if (cumple.name.isNotEmpty) {
       nameController.text = cumple.name;
       cumpleController.text = formatDate(cumple.date);
+      _isEnabled = true;
     }
 
     // https://github.com/flutter/flutter/issues/23195
@@ -110,10 +112,7 @@ class _CumpleFormState extends State<CumpleForm> {
           Container(
             margin: const EdgeInsets.symmetric(vertical: 25, horizontal: 80),
             child: GestureDetector(
-              onTap: () async {
-               await _elegirFecha(context, cumpleController);
-                if (cumpleController.text.isNotEmpty) setState(() => _isEnabled = true);
-              },
+              onTap: () => _elegirFecha(context, cumpleController),
               child: TextFormField(
                 controller: cumpleController,
                 enabled: false,
@@ -125,7 +124,6 @@ class _CumpleFormState extends State<CumpleForm> {
               ),
             ),
           ),
-
           const SizedBox(height: 50),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -136,10 +134,7 @@ class _CumpleFormState extends State<CumpleForm> {
                   padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 20),
                   textStyle: const TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
                 ),
-                onPressed: () async {
-                  await _elegirFecha(context, cumpleController);
-                  if (cumpleController.text.isNotEmpty) setState(() => _isEnabled = true);
-                },
+                onPressed: () => _elegirFecha(context, cumpleController),
                 child: Text(
                   'ELEGIR FECHA',
                   style: Theme.of(context).textTheme.labelMedium?.copyWith(color: Colors.white),
@@ -147,7 +142,7 @@ class _CumpleFormState extends State<CumpleForm> {
               ),
 
               const SizedBox(width: 20),
-               //https://stackoverflow.com/questions/67045317/disable-evaluated-button-animation-on-tap-click
+              //https://stackoverflow.com/questions/67045317/disable-evaluated-button-animation-on-tap-click
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
                   padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 20),
@@ -156,7 +151,7 @@ class _CumpleFormState extends State<CumpleForm> {
                             : const Color.fromARGB(255, 221, 221, 224),
                 ).copyWith(
                   overlayColor: MaterialStateProperty.resolveWith(
-                    (states) => _isEnabled ? null:  Colors.transparent,
+                    (states) => _isEnabled ? null : Colors.transparent,
                   ),
                   elevation: MaterialStateProperty.resolveWith(
                     (states) => _isEnabled ? 3 : 0,
@@ -191,8 +186,8 @@ class _CumpleFormState extends State<CumpleForm> {
 
   _elegirFecha(BuildContext context, TextEditingController cumpleController) async {
     final List<String> date = cumpleController.text.isEmpty 
-                              ? ['18', '02', '2014'] 
-                              : cumpleController.text.split('/');
+                                ? ['18', '02', '2014'] 
+                                : cumpleController.text.split('/');
 
     final int day = int.parse(date[0]);
     final int month = int.parse(date[1]);

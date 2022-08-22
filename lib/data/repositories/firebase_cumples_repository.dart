@@ -84,6 +84,7 @@ class FirebaseCumplesRepository {
         userInfo.ocupacion = info.data().ocupacion;
         userInfo.uid = info.data().uid;
         userInfo.docId = info.id;
+        userInfo.profilePicture = info.data().profilePicture;
       }
     }
 
@@ -98,7 +99,7 @@ class FirebaseCumplesRepository {
 
   Future<bool> updateInfoUserFirebase(User user) async {
     bool resp = false;
-    Map<String, dynamic> newUser = {'displayName': user.displayName, 'ocupacion': user.ocupacion, "uid": user.uid};
+    Map<String, dynamic> newUser = {'displayName': user.displayName, 'ocupacion': user.ocupacion, "uid": user.uid, "profilePicture": user.profilePicture};
 
     await userRef
           .doc(user.uid)
@@ -110,4 +111,21 @@ class FirebaseCumplesRepository {
 
     return resp;
   }
+
+
+  Future<bool> deleteCumpleFirebase(String userId, String cumpleId) async {
+    bool resp = false;
+
+    await userRef
+          .doc(userId)
+          .collection('cumples')
+          .doc(cumpleId)
+          .delete()
+          .then((value) => resp = true)
+          .catchError((error) => resp = false);
+
+    return resp;
+  }
 }
+  
+

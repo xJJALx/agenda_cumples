@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 
 import 'package:animate_do/animate_do.dart';
 import 'package:agenda_cumples/ui/providers/providers.dart';
-
 
 class Profile extends StatelessWidget {
   const Profile({Key? key}) : super(key: key);
@@ -41,12 +41,29 @@ class Avatar extends StatelessWidget {
           curve: Curves.easeOutBack,
           duration: const Duration(milliseconds: 900),
           child: FadeInDown(
-            duration: const Duration(milliseconds: 850),
-            delay: const Duration(milliseconds: 350),
-            child: const CircleAvatar(
-              radius: 35,
-              backgroundImage: AssetImage('assets/WinterMask.jpeg'),
-            ),
+              duration: const Duration(milliseconds: 850),
+              delay: const Duration(milliseconds: 350),
+              child: _editMode
+                  ? GestureDetector(
+                      onTap: () async {
+                        final ImagePicker _picker = ImagePicker();
+                        final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
+                        if(image != null) Provider.of<UserProvider>(context, listen: false).updateImage(image.path);
+                      },
+                      child: Stack(
+                        children: [
+                          CircleAvatar(
+                            radius: 35,
+                            backgroundImage: NetworkImage(UserProvider.usuario.profilePicture),
+                          ),
+                          const Positioned(right: 0, bottom: 0, child: Icon(Icons.camera_alt_outlined, size: 22, color: Color(0xFFa492f8))),
+                        ],
+                      ),
+                    )
+                : CircleAvatar(
+                    radius: 35,
+                    backgroundImage: NetworkImage(UserProvider.usuario.profilePicture),
+                  ),
           ),
         ),
         _editMode ? _UserEditData() : const _UserData()
@@ -108,7 +125,7 @@ class _UserData extends StatelessWidget {
         children: [
           const SizedBox(height: 10),
           Text(
-            user.displayName.isEmpty ? 'Miku': user.displayName,
+            user.displayName.isEmpty ? 'Miku' : user.displayName,
             style: Theme.of(context).textTheme.headlineMedium,
           ),
           const SizedBox(height: 5),
@@ -168,8 +185,8 @@ class EditIcon extends StatelessWidget {
               highlightColor: Colors.transparent,
               hoverColor: Colors.transparent,
               icon: isEditMode 
-                    ? const Icon(Icons.check, color: Color(0xFFa492f8)) 
-                    : const Icon(Icons.edit, color: Color(0xFFa492f8)),
+                      ? const Icon(Icons.check, color: Color(0xFFa492f8)) 
+                      : const Icon(Icons.edit, color: Color(0xFFa492f8)),
             ),
           ),
         ),

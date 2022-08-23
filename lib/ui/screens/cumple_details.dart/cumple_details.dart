@@ -90,7 +90,7 @@ class _CumpleState extends State<_Cumple> {
           data: cumple,
           onDragStarted: () => setState(() => _isDragged = true),
           onDragEnd: (value) => setState(() => _isDragged = false),
-          feedback: CumpleCard(cumple),
+          feedback: Padding(padding: const EdgeInsets.only(top: 50), child: CumpleCard(cumple)),
           childWhenDragging: const SizedBox(width: 250, height: 320),
           child: _SplashCumpleCard(_isDeleted),
         ),
@@ -197,7 +197,6 @@ class _InfoCumple extends StatelessWidget {
     var info = Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        const SizedBox(height: 20),
         FittedBox(
           child: Text(
             cumple.name,

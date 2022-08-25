@@ -61,9 +61,16 @@ class Avatar extends StatelessWidget {
                       ),
                     )
                 : CircleAvatar(
-                    radius: 35,
-                    backgroundImage: NetworkImage(UserProvider.usuario.profilePicture),
-                  ),
+                backgroundColor: const Color(0xFFa492f8),
+                radius: 35,
+                backgroundImage: const AssetImage('assets/loading.gif'),
+                child: CircleAvatar(
+                  radius: 35,
+                  backgroundColor: Colors.transparent,
+                  backgroundImage: NetworkImage(UserProvider.usuario.profilePicture),
+                ),
+              ),
+                  
           ),
         ),
         _editMode ? _UserEditData() : const _UserData()

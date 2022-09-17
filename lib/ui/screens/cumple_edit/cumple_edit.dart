@@ -83,8 +83,9 @@ class _CumpleFormState extends State<CumpleForm> {
     final cumple = cumpleProvider.cumple;
     bool _isEnabled = nameController.text.isNotEmpty;
 
-
-    if (cumple.name.isNotEmpty) {
+    // Inicializamos los valores. Controlamos que no se inicialice constantemente en cada 
+    // reconstruccion del widget (onChange del input del nombre) al detectar el foco
+    if (cumple.name.isNotEmpty && !FocusScope.of(context).hasFocus) {
       nameController.text = cumple.name;
       cumpleController.text = formatDate(cumple.date);
       _isEnabled = true;

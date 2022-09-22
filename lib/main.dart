@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 
 import 'package:agenda_cumples/data/repositories/firebase_cumples_repository.dart';
 import 'package:agenda_cumples/ui/routes/routes.dart';
@@ -36,6 +37,15 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Agenda cumpleaños',
+      localizationsDelegates: const [
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      supportedLocales: const [
+        // Locale('en', ''),
+        Locale('es', ''),
+      ],
       theme: Provider.of<ThemeProvider>(context).getTheme,
       initialRoute: 'auth',
       routes: appRoutes,

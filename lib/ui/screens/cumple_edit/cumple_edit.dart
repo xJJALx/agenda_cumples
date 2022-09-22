@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
 
 import 'package:agenda_cumples/ui/providers/theme_provider.dart';
@@ -83,7 +84,7 @@ class _CumpleFormState extends State<CumpleForm> {
     final cumple = cumpleProvider.cumple;
     bool _isEnabled = nameController.text.isNotEmpty;
 
-    // Inicializamos los valores. Controlamos que no se inicialice constantemente en cada 
+    // Inicializamos los valores. Controlamos que no se inicialice constantemente en cada
     // reconstruccion del widget (onChange del input del nombre) al detectar el foco
     if (cumple.name.isNotEmpty && !FocusScope.of(context).hasFocus) {
       nameController.text = cumple.name;
@@ -113,7 +114,7 @@ class _CumpleFormState extends State<CumpleForm> {
           Container(
             margin: const EdgeInsets.symmetric(vertical: 25, horizontal: 80),
             child: GestureDetector(
-              onTap: () => _elegirFecha(context, cumpleController),
+              onTap: () => _elegirFecha(),
               child: TextFormField(
                 controller: cumpleController,
                 enabled: false,
@@ -135,7 +136,8 @@ class _CumpleFormState extends State<CumpleForm> {
                   padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 20),
                   textStyle: const TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
                 ),
-                onPressed: () => _elegirFecha(context, cumpleController),
+                // onPressed: () => _elegirFecha(context, cumpleController), // AndroidVersion
+                onPressed: () => _elegirFecha(),
                 child: Text(
                   'ELEGIR FECHA',
                   style: Theme.of(context).textTheme.labelMedium?.copyWith(color: Colors.white),
@@ -147,9 +149,7 @@ class _CumpleFormState extends State<CumpleForm> {
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
                   padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 20),
-                  primary: _isEnabled 
-                            ? const Color.fromARGB(255, 106, 145, 230) 
-                            : const Color.fromARGB(255, 221, 221, 224),
+                  primary: _isEnabled ? const Color.fromARGB(255, 106, 145, 230) : const Color.fromARGB(255, 221, 221, 224),
                 ).copyWith(
                   overlayColor: MaterialStateProperty.resolveWith(
                     (states) => _isEnabled ? null : Colors.transparent,
@@ -163,7 +163,7 @@ class _CumpleFormState extends State<CumpleForm> {
                     null;
                   } else {
                     if (cumpleProvider.cumple.id == '') {
-                      _addCumple(context, cumpleProvider);
+                      _addCumple(cumpleProvider);
                       Provider.of<CumpleProvider>(context, listen: false).cumple = cumple;
                     }
 
@@ -173,9 +173,7 @@ class _CumpleFormState extends State<CumpleForm> {
                 },
                 child: Text(
                   'GUARDAR',
-                  style: _isEnabled 
-                          ? Theme.of(context).textTheme.labelMedium?.copyWith(color: Colors.white) 
-                          : Theme.of(context).textTheme.labelMedium?.copyWith(color: Colors.grey[500]),
+                  style: _isEnabled ? Theme.of(context).textTheme.labelMedium?.copyWith(color: Colors.white) : Theme.of(context).textTheme.labelMedium?.copyWith(color: Colors.grey[500]),
                 ),
               ),
             ],
@@ -185,29 +183,71 @@ class _CumpleFormState extends State<CumpleForm> {
     );
   }
 
-  _elegirFecha(BuildContext context, TextEditingController cumpleController) async {
-    final List<String> date = cumpleController.text.isEmpty 
-                                ? ['18', '02', '2014'] 
-                                : cumpleController.text.split('/');
+
+  // IOS VERSION
+  _elegirFecha() {
+    final List<String> date = cumpleController.text.isEmpty ? ['18', '02', '2014'] : cumpleController.text.split('/');
 
     final int day = int.parse(date[0]);
     final int month = int.parse(date[1]);
     final int year = int.parse(date[2]);
+    DateTime initDate = DateTime(year, month, day);
 
-    final DateTime? newDate = await showDatePicker(
+    // Inicializamos con estos valores por si la fecha sugerida se aceptara.
+    selectedDate = initDate;
+    cumpleController.text = formatDate(initDate);
+
+    showCupertinoModalPopup(
       context: context,
-      initialDate: DateTime(year, month, day),
-      firstDate: DateTime(1900),
-      lastDate: DateTime.now().add(const Duration(days: 365)),
+      builder: (_) => Container(
+        height: 500,
+        color: const Color.fromARGB(255, 255, 255, 255),
+        child: Column(
+          children: [
+            SizedBox(
+              height: 400,
+              child: CupertinoDatePicker(
+                mode: CupertinoDatePickerMode.date,
+                initialDateTime: initDate,
+                onDateTimeChanged: (newDate) {
+                  selectedDate = newDate;
+                  cumpleController.text = formatDate(newDate);
+                },
+              ),
+            ),
+            CupertinoButton(
+              child: const Text('OK'),
+              onPressed: () => Navigator.of(context).pop(),
+            )
+          ],
+        ),
+      ),
     );
-
-    if (newDate != null) {
-      selectedDate = newDate;
-      cumpleController.text = formatDate(newDate);
-    }
   }
 
-  _addCumple(BuildContext context, CumpleProvider cumpleProvider) {
+
+  // ANDROID VERSION
+  // _elegirFecha() async {
+  //   final List<String> date = cumpleController.text.isEmpty ? ['18', '02', '2014'] : cumpleController.text.split('/');
+
+  //   final int day = int.parse(date[0]);
+  //   final int month = int.parse(date[1]);
+  //   final int year = int.parse(date[2]);
+
+  //   final DateTime? newDate = await showDatePicker(
+  //     context: context,
+  //     initialDate: DateTime(year, month, day),
+  //     firstDate: DateTime(1900),
+  //     lastDate: DateTime.now().add(const Duration(days: 365)),
+  //   );
+
+  //   if (newDate != null) {
+  //     selectedDate = newDate;
+  //     cumpleController.text = formatDate(newDate);
+  //   }
+  // }
+
+  _addCumple(CumpleProvider cumpleProvider) {
     if (nameController.text.isNotEmpty && cumpleController.text.isNotEmpty) {
       final resp = cumpleProvider.addCumple(nameController.text, selectedDate);
 

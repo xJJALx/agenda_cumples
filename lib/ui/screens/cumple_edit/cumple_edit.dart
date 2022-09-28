@@ -132,7 +132,7 @@ class _CumpleFormState extends State<CumpleForm> {
             children: [
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                  primary: Colors.indigo,
+                  backgroundColor: Colors.indigo,
                   padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 20),
                   textStyle: const TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
                 ),
@@ -149,7 +149,7 @@ class _CumpleFormState extends State<CumpleForm> {
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
                   padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 20),
-                  primary: _isEnabled ? const Color.fromARGB(255, 106, 145, 230) : const Color.fromARGB(255, 221, 221, 224),
+                  backgroundColor: _isEnabled ? const Color.fromARGB(255, 106, 145, 230) : const Color.fromARGB(255, 221, 221, 224),
                 ).copyWith(
                   overlayColor: MaterialStateProperty.resolveWith(
                     (states) => _isEnabled ? null : Colors.transparent,

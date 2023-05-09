@@ -9,6 +9,7 @@ final Map<String, Widget Function(BuildContext)> appRoutes = {
   'cumple-edit': (_) => const CumpleEditScreen(),
   'cumple-details': (_) => const CumpleDetailsScreen(),
   'estadisticas': (_) => const EstadisticasScreen(),
+  'perfil': (_) => const ProfileScreen(),
 };
 
 class CustomPageRoute extends PageRouteBuilder {

@@ -1,3 +1,4 @@
+import 'package:agenda_cumples/ui/widgets/btn_back.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
@@ -10,17 +11,22 @@ class Profile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: SafeArea(
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: const [
-            MenuIcon(),
-            Avatar(),
-            EditIcon(),
+      final isDark = context.watch<ThemeProvider>().isDark;
+      
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Column(
+          children: [
+            Container(
+              margin: const EdgeInsets.only(top: 20, left: 10),
+              child: const BtnBack(color: Colors.deepPurpleAccent),
+            ),
           ],
         ),
-      ),
+        const Avatar(),
+        const EditIcon(),
+      ],
     );
   }
 }
@@ -36,41 +42,44 @@ class Avatar extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         AnimatedContainer(
-          width: _editMode ? 50 : 70,
-          height: _editMode ? 50 : 70,
+          width: _editMode ? 150 : 170,
+          height: _editMode ? 150 : 170,
           curve: Curves.easeOutBack,
           duration: const Duration(milliseconds: 900),
           child: FadeInDown(
-              duration: const Duration(milliseconds: 850),
-              delay: const Duration(milliseconds: 350),
-              child: _editMode
-                  ? GestureDetector(
-                      onTap: () async {
-                        final ImagePicker _picker = ImagePicker();
-                        final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
-                        if(image != null) Provider.of<UserProvider>(context, listen: false).updateImage(image.path);
-                      },
-                      child: Stack(
-                        children: [
-                          CircleAvatar(
-                            radius: 35,
-                            backgroundImage: NetworkImage(UserProvider.usuario.profilePicture),
-                          ),
-                          const Positioned(right: 0, bottom: 0, child: Icon(Icons.camera_alt_outlined, size: 22, color: Color(0xFFa492f8))),
-                        ],
-                      ),
-                    )
+            duration: const Duration(milliseconds: 850),
+            delay: const Duration(milliseconds: 350),
+            child: _editMode
+                ? GestureDetector(
+                    onTap: () async {
+                      final ImagePicker _picker = ImagePicker();
+                      final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
+                      if (image != null)
+                        Provider.of<UserProvider>(context, listen: false).updateImage(image.path);
+                    },
+                    child: Stack(
+                      children: [
+                        CircleAvatar(
+                          radius: 350,
+                          backgroundImage: NetworkImage(UserProvider.usuario.profilePicture),
+                        ),
+                        const Positioned(
+                            right: 0,
+                            bottom: -5,
+                            child: Icon(Icons.camera_alt_outlined, size: 28, color: Color(0xFFa492f8))),
+                      ],
+                    ),
+                  )
                 : CircleAvatar(
-                backgroundColor: const Color(0xFFa492f8),
-                radius: 35,
-                backgroundImage: const AssetImage('assets/loading.gif'),
-                child: CircleAvatar(
-                  radius: 35,
-                  backgroundColor: Colors.transparent,
-                  backgroundImage: NetworkImage(UserProvider.usuario.profilePicture),
-                ),
-              ),
-                  
+                    backgroundColor: const Color(0xFFa492f8),
+                    radius: 350,
+                    backgroundImage: const AssetImage('assets/loading.gif'),
+                    child: CircleAvatar(
+                      radius: 350,
+                      backgroundColor: Colors.transparent,
+                      backgroundImage: NetworkImage(UserProvider.usuario.profilePicture),
+                    ),
+                  ),
           ),
         ),
         _editMode ? _UserEditData() : const _UserData()
@@ -94,21 +103,21 @@ class _UserEditData extends StatelessWidget {
       child: Column(
         children: [
           SizedBox(
-            width: 180,
+            width: 200,
             child: TextFormField(
               controller: nameController,
               autofocus: true,
               textAlign: TextAlign.center,
-              style: Theme.of(context).textTheme.labelMedium?.copyWith(fontSize: 16),
+              style: Theme.of(context).textTheme.labelMedium?.copyWith(fontSize: 22),
               onChanged: (text) => UserProvider.usuario.displayName = text,
             ),
           ),
           SizedBox(
-            width: 180,
+            width: 200,
             child: TextFormField(
               controller: ocupacionController,
               textAlign: TextAlign.center,
-              style: Theme.of(context).textTheme.labelMedium?.copyWith(fontSize: 16),
+              style: Theme.of(context).textTheme.labelMedium?.copyWith(fontSize: 22),
               onChanged: (text) => UserProvider.usuario.ocupacion = text,
             ),
           ),
@@ -130,12 +139,12 @@ class _UserData extends StatelessWidget {
       delay: const Duration(milliseconds: 700),
       child: Column(
         children: [
-          const SizedBox(height: 10),
+          const SizedBox(height: 20),
           Text(
             user.displayName.isEmpty ? 'Miku' : user.displayName,
-            style: Theme.of(context).textTheme.headlineMedium,
+            style: Theme.of(context).textTheme.headlineLarge,
           ),
-          const SizedBox(height: 5),
+          const SizedBox(height: 15),
           Text(
             user.ocupacion.isEmpty ? 'Sobrecualificad@' : user.ocupacion,
             style: Theme.of(context).textTheme.titleMedium,
@@ -191,9 +200,9 @@ class EditIcon extends StatelessWidget {
               splashColor: Colors.transparent,
               highlightColor: Colors.transparent,
               hoverColor: Colors.transparent,
-              icon: isEditMode 
-                      ? const Icon(Icons.check, color: Color(0xFFa492f8)) 
-                      : const Icon(Icons.edit, color: Color(0xFFa492f8)),
+              icon: isEditMode
+                  ? const Icon(Icons.check, color: Color(0xFFa492f8))
+                  : const Icon(Icons.edit, color: Color(0xFFa492f8)),
             ),
           ),
         ),

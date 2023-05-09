@@ -137,6 +137,7 @@ class _Buscador extends StatelessWidget {
       margin: const EdgeInsets.only(left: 15, right: 40),
       width: double.infinity,
       child: TextField(
+        maxLines: 1,
         controller: _searchController,
         style: Theme.of(context).textTheme.labelMedium?.copyWith(fontSize: 16),
         cursorColor: const Color(0xFFa492f8),

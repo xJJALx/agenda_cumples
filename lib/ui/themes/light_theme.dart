@@ -8,6 +8,8 @@ class LightTheme {
       secondary: const Color(0xFFf4f2fe),
     ),
     textTheme: TextTheme(
+      bodyLarge: GoogleFonts.shrikhand(fontSize: 36),
+      displayLarge: GoogleFonts.shrikhand(fontSize: 26),
       displayMedium: GoogleFonts.play(fontSize: 44, color: const Color.fromARGB(211, 0, 0, 0)),
       headlineLarge: GoogleFonts.play(fontSize: 34, color: const Color.fromARGB(211, 0, 0, 0)),
       headlineMedium: GoogleFonts.play(fontSize: 24,color: const Color.fromARGB(211, 0, 0, 0)),

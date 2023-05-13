@@ -70,14 +70,25 @@ class CumpleProvider extends ChangeNotifier {
       } else {
         firstCumpleOfMonth = false;
       }
-      firstCumpleOfMonth ? _cumples.putIfAbsent(cumple, () => true) : _cumples.putIfAbsent(cumple, () => false);
+      firstCumpleOfMonth
+          ? _cumples.putIfAbsent(cumple, () => true)
+          : _cumples.putIfAbsent(cumple, () => false);
     }
   }
 
-  // Para ordenar correctamente se debe hacer en dos pasos empezando por el dato mas pequeño (día en este caso)
+
+  // Para ordenar correctamente se debe dar el mismo año a todos
   void sortCumples() {
-    _cumplesResp.sort((a, b) => a.date.day.compareTo(b.date.day));
-    _cumplesResp.sort((a, b) => a.date.month.compareTo(b.date.month));
+    _cumplesResp.sort((a, b) {
+      final aDate = DateTime(2000, a.date.month, a.date.day);
+      final bDate = DateTime(2000, b.date.month, b.date.day);
+      return aDate.compareTo(bDate);
+    });
+  }
+
+// Todo: implementar como opcion en screen cumples 
+  void sortCumplesByAge() {
+    _cumplesResp.sort((a, b) => a.date.compareTo(b.date));
     notifyListeners();
   }
 
@@ -101,7 +112,9 @@ class CumpleProvider extends ChangeNotifier {
 
     // Control mes actual
     if (_nearCumples.isEmpty) {
-      _nearCumples = [..._cumplesResp.where((cumple) => cumple.date.month == _today.month && cumple.date.day >= _today.day)];
+      _nearCumples = [
+        ..._cumplesResp.where((cumple) => cumple.date.month == _today.month && cumple.date.day >= _today.day)
+      ];
     }
     // Cumple más cerano
     while (_nearCumples.isEmpty && nextMonth <= 12) {
@@ -119,9 +132,12 @@ class CumpleProvider extends ChangeNotifier {
     if (query.isEmpty) {
       _searchCumples = [];
     } else {
-      _searchCumples = [..._cumplesResp.where((cumple) => cumple.name.toLowerCase().contains(query.toLowerCase()))];
+      _searchCumples = [
+        ..._cumplesResp.where((cumple) => cumple.name.toLowerCase().contains(query.toLowerCase()))
+      ];
 
-      if (_searchCumples.isEmpty) _searchCumples = [Cumple(name: 'No hay coincidencias', date: DateTime.now())];
+      if (_searchCumples.isEmpty)
+        _searchCumples = [Cumple(name: 'No hay coincidencias', date: DateTime.now())];
     }
     notifyListeners();
   }
@@ -148,7 +164,8 @@ class CumpleProvider extends ChangeNotifier {
 
     final int nearMonth = _nearCumples.isEmpty ? _today.month : _nearCumples.first.date.month;
     final int indexCumple = _cumplesResp.indexWhere((cumple) => cumple.date.month == nearMonth);
-    _indexCumpleInit = indexCumple; // Guardamos la posición del cumple mas cercano a mostrar. Util para el swiper.
+    _indexCumpleInit =
+        indexCumple; // Guardamos la posición del cumple mas cercano a mostrar. Util para el swiper.
 
     // Control si no hay cumple cercano
     indexCumple == -1 ? numCumples = _cumplesResp.length : numCumples = indexCumple;
@@ -190,8 +207,8 @@ class CumpleProvider extends ChangeNotifier {
     return resp;
   }
 
-  Future<bool> deleteCumple(String cumpleId) async{
-    final resp = await repository.deleteCumpleFirebase(UserProvider.usuario.uid, cumpleId );
+  Future<bool> deleteCumple(String cumpleId) async {
+    final resp = await repository.deleteCumpleFirebase(UserProvider.usuario.uid, cumpleId);
 
     return resp;
   }

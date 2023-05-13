@@ -28,8 +28,8 @@ class CumpleCard extends StatelessWidget {
       constraints: const BoxConstraints(minWidth: 350, maxWidth: 500),
       width: size.width * 0.9,
       height: 220,
-      child: Hero(
-        tag: cumple.id,
+      // child: Hero(
+        // tag: cumple.id,
         child: GestureDetector(
           onTap: () {
             cumpleProvider.cumple = cumple;
@@ -100,7 +100,7 @@ class CumpleCard extends StatelessWidget {
             ),
           ),
         ),
-      ),
+      // ),
     );
   }
 }

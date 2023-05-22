@@ -12,19 +12,19 @@ class NavigationBarHome extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // final size = MediaQuery.of(context).size;
+    final size = MediaQuery.of(context).size;
     final isDark = context.watch<ThemeProvider>().isDark;
 
     return Container(
       margin: const EdgeInsets.all(10),
       // height: 100,
-      // width: size.width * 0.95,
+      width: size.width * 0.95,
       decoration: BoxDecoration(
         color: isDark ? Theme.of(context).colorScheme.secondary : Colors.grey[200],
         borderRadius: BorderRadius.circular(25),
       ),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
           Row(
             children: [
@@ -40,6 +40,7 @@ class NavigationBarHome extends StatelessWidget {
             ],
           ),
           Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               GestureDetector(
                 onTap: () {
@@ -70,7 +71,7 @@ class NavigationBarHome extends StatelessWidget {
                   color: isDark ? Theme.of(context).colorScheme.secondary : Colors.white,
                   colorIcon:  isDark ?  Colors.white70 : const Color.fromARGB(255, 16, 20, 61),
                 ),
-              ),
+              ),             
             ],
           ),
         ],
@@ -95,7 +96,7 @@ class ButtonBarBig extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: 20),
+      // margin: EdgeInsets.symmetric(horizontal: 20),
       height: 60,
       width: 130,
       child: Card(
@@ -134,7 +135,7 @@ class ButtonBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.all(4),
+      // margin: const EdgeInsets.all(4),
       height: 55,
       width: 55,
       child: Card(

@@ -76,7 +76,6 @@ class CumpleProvider extends ChangeNotifier {
     }
   }
 
-
   // Para ordenar correctamente se debe dar el mismo año a todos
   void sortCumples() {
     _cumplesResp.sort((a, b) {
@@ -86,7 +85,7 @@ class CumpleProvider extends ChangeNotifier {
     });
   }
 
-// Todo: implementar como opcion en screen cumples 
+// Todo: implementar como opcion en screen cumples
   void sortCumplesByAge() {
     _cumplesResp.sort((a, b) => a.date.compareTo(b.date));
     notifyListeners();
@@ -232,6 +231,10 @@ class CumpleProvider extends ChangeNotifier {
     if (months < 0 && years > 0 || (months == 0 && _today.day < cumple.date.day)) years--;
 
     return years;
+  }
+
+  bool isBirthday() {
+    return _today.month == _cumple.date.month && _today.day == _cumple.date.day;
   }
 
   String getMostCommonMonth() {

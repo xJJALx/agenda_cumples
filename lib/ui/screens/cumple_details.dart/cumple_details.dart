@@ -209,10 +209,23 @@ class _InfoCumple extends StatelessWidget {
           style: Theme.of(context).textTheme.displayMedium,
         ),
         const SizedBox(height: 20),
-        Text(
-          '${cumpleProvider.getAge()} años',
-          style: Theme.of(context).textTheme.displayMedium,
-        ),
+        cumpleProvider.isBirthday()
+            ? Column(
+              children: [
+                Text(
+                    'Hoy cumple',
+                    style: Theme.of(context).textTheme.displayMedium,
+                  ),
+                Text(
+                    '${cumpleProvider.getAge()} años',
+                    style: Theme.of(context).textTheme.displayMedium,
+                  ),
+              ],
+            )
+            : Text(
+                'Tiene ${cumpleProvider.getAge()} años',
+                style: Theme.of(context).textTheme.displayMedium,
+              ),
       ],
     );
 
